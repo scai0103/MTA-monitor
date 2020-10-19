@@ -1,0 +1,36 @@
+summary of the updates did on 09/17/2020
+
+All updated source code has been updated to NYCTA server. If you need the newest updates, please connect to NYCTA server to download the source code at 10.132.12.7
+
+username: root
+password: naspas
+
+webclient login: admin@solari.it/naspas123
+
+1. We have added Map animation to the map.
+
+	The map will move around when mouse stopped moving for 10 seconds.
+
+	You can find the updates at /solari/solari-monitor/server/public/dist/directiives.js
+
+	Search for "panTo" you will find the update locations.
+
+2. We have added short cut for the dots on the top (statusSummary)
+
+	You can find the updates at /solari/solari-monitor/server/public/dist/directives.js
+
+	Search for "setFilter", you will find the updates locations.
+
+3. Added the different colors and different stages to the map
+
+	Instead of only having "ok","error","warning","maintenance", we added "ws1","ws2","es1","es2" represent the different stages of error and warning. They are represented by different color gredient.
+
+	You can find this updates at /public/dist/controllers.js
+
+	Simply search for "ws1".
+		
+	Summary of code: added the warning devices to a array and calculte the ratio of the station and show station with represented stage.
+
+
+
+Those are the major updates we have added. 

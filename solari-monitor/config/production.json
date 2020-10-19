@@ -1,0 +1,35 @@
+{
+  "LogLevel": "info",
+  "ServerPort": 80,
+  "DbConnectionURI": "mysql://root:naspas@localhost:3306/solari_monitor",
+  "Icinga": {
+    "URI": "https://localhost:5665",
+    "Auth": "root:naspas"
+  },
+  "Redmine": {
+    "URI": "http://172.26.57.57:8080",
+    "Path": "/redmine/",
+    "Auth": "admin:naspas123",
+    "ProjectId": 1,
+    "RoleId": 5,
+    "CustomFieldId": 1
+  },
+  "Kibana": {
+    "URI": "http://172.26.57.58:5601"
+  },
+  "Elastic": {
+    "URI": "http://172.26.57.58:9200"
+  },
+  "Batch": {
+    "URI": "http://172.26.57.57:1338",
+    "Auth": "admin:naspas123"
+  },
+  "SmtpConfig": {
+    "host": "smtp.mailgun.org",
+    "secure": "true", // use SSL
+    "auth": {
+      "user": "postmaster@sandbox073c26ce13d14c98bf2ed08c7ac4dbd1.mailgun.org",
+      "pass": "d900511c4aec044640804f0aea51ebee"
+    }
+  }
+}

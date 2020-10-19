@@ -1,0 +1,36 @@
+{
+  "BulkImportOutputPath": "server/mock/hosts",
+  "BulkImportCommand": "dir",
+  "DbConnectionURI": "mysql://root@localhost:3306/solari_monitor",
+  "LogLevel": "debug",
+  "Icinga": {
+    "URI": "https://10.50.0.234:5665",//"https://172.26.57.57:5665",
+    "Auth": "root:Cartizze15"
+  },
+  "Redmine": {
+    "URI": "https://10.50.0.239",
+    "Path": "/",
+    "Auth": "admin:Cartizze15",
+    "ProjectId": 5,
+    "RoleId": 5,
+    "CustomFieldId": 3
+  },
+  "Kibana": {
+    "URI": "http://10.50.0.221:5601"
+  },
+  "Batch": {
+    "URI": "http://localhost:1338",
+    "Auth": "admin:naspas123"
+  },
+  "ElasticSearch": {
+    "URI": "http://localhost:9200"
+  },
+  "SmtpConfig": {
+    "host": "smtp.mailgun.org",
+    "secure": "true",
+    "auth": {
+      "user": "postmaster@sandbox073c26ce13d14c98bf2ed08c7ac4dbd1.mailgun.org",
+      "pass": "d900511c4aec044640804f0aea51ebee"
+    }
+  }
+}

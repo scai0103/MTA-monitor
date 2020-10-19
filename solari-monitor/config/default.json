@@ -1,0 +1,86 @@
+{
+  "LogLevel": "info",
+  "LogBaseFolderPath": "server/log",
+  "UploadBaseFolderPath": "server/upload",
+  "TempBaseFolderPath": "server/public/assets/temp",
+  "TempFileLiveTime": 3600000,
+  "CacheFolderPath": "server/cache",
+  "MRBaseFolderPath": "server/public/assets/images/MR",
+  "IcingaHostTemplateFilePath": "server/templates/icinga2-host.conf",
+  "IcingaHostServiceDefaultsFilePath": "server/templates/icinga2-host-service-defaults.conf",
+  "IcingaHostGroupTemplateFilePath": "server/templates/icinga2-hostgroup.conf",
+  "IcingaFloorTemplateFilePath": "server/templates/icinga2-floor.conf",
+  "BulkImportOutputPath": "/var/lib/icinga2/api/packages/_api/MONDB-1472455945-1/conf.d/hosts/",
+  "BulkImportHostGroupOutputPath": "/var/lib/icinga2/api/packages/_api/MONDB-1472455945-1/conf.d/hostgroups/",
+  "BulkImportReportPath": "server/public/assets/import_report/",
+  "BulkImportCommand": "/etc/init.d/icinga2 restart",
+  "ServerProtocol": "http",
+  "ServerPort": 1337,
+  "ServerPortSSL": 443,
+  "SessionSecretKey": "JuicySRLSecretSanta",
+  "SessionResave": false,
+  "SessionSaveUninitialized": false,
+  "DbConnectionURI": "",
+  "ProxyEndpoints": {
+    "Rd_Memberships": "/proxy/api/redmine/projects/solari-monitor/memberships.json",
+    "Rd_Users": "/proxy/api/redmine/users.json",
+    "Rd_Tickets": "/proxy/api/redmine/issues.json",
+    "Ic_Hosts": "/proxy/api/icinga/v1/objects/hosts",
+    "Ic_HostGroups": "/proxy/api/icinga/v1/objects/hostgroups",
+    "Ic_Services": "/proxy/api/icinga/v1/objects/services",
+    "Ic_ServiceGroups": "/proxy/api/icinga/v1/objects/servicegroups",
+    "Ic_Downtimes": "/proxy/api/icinga/v1/objects/downtimes",
+    "Ic_Maintenance": "/proxy/api/icinga/v1/objects/downtimes?filter=host.name==\"{0}\"&type=Host",
+    "Ic_CreateMaintenance": "/proxy/api/icinga/v1/actions/schedule-downtime?filter=host.name==\"{0}\"&type=Host",
+    "Ic_RemoveMaintenance": "/proxy/api/icinga/v1/actions/remove-downtime?filter=host.name==\"{0}\"&type=Host"
+  },
+  "Icinga": {
+    "URI": "",
+    "Auth": "",
+    "EndpointHosts": "/v1/objects/hosts",
+    "EndpointHostGroups": "/v1/objects/hostgroups",
+    "EndpointServices": "/v1/objects/services",
+    "EndpointServiceGroups": "/v1/objects/servicegroups",
+    "EndpointDowntimes": "/v1/objects/downtimes",
+    "EndpointMaintenance": "/v1/objects/downtimes?filter=host.name==\"{0}\"&type=Host",
+    "EndpointCreateMaintenance": "/v1/actions/schedule-downtime?filter=host.name==\"{0}\"&type=Host",
+    "EndpointRemoveMaintenance": "/v1/actions/remove-downtime?filter=host.name==\"{0}\"&type=Host"
+  },
+  "Redmine": {
+    "URI": "",
+    "Path": "",
+    "Auth": "",
+    "ProjectId": 0,
+    "RoleId": 0,
+    "CustomFieldId": 0,
+    "EndpointMemberships": "/projects/solari-monitor/memberships.json",
+    "EndpointUsers": "/users.json",
+    "EndpointUser": "/users/{0}.json",
+    "EndpointTickets": "/issues.json"
+  },
+  "Kibana": {
+    "URI": "",
+    "availabilityDashboardUrl": "/app/kibana#/dashboard/{0}?embed&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:{1},mode:{2},to:{3}))&_a=(description:'',filters:!(),fullScreenMode:!f,options:(darkTheme:!f,hidePanelTitles:!f,useMargins:!t),panels:!((gridData:(h:3,i:'1',w:12,x:0,y:0),id:b63b9dc0-64a2-11e8-9af4-a5ae8c0518dc,panelIndex:'1',type:visualization,version:'6.2.4')),query:(language:lucene,query:'{4}'),timeRestore:!f,title:Availability-dashboard,viewMode:view)",
+    "defaultTimespanMode": "quick",
+    "defaultQuery": "icinga_host_name:{0} AND ls_icinga_host_config.station_name:{1} AND ls_icinga_host_config.template_name:{2}"
+  },
+  "Elastic": {
+    "URI": ""
+  },
+  "Batch": {
+    "URI": "",
+    "Auth": "",
+    "EndpointReceiver": "/receiver",
+    "EndpointStatus": "/status?batchId={0}",
+    "EndpointDelete": "/delete?batchId={0}",
+    "EndpointIsBusy": "/isbusy?requestedJobs={0}"
+  },
+  "SmtpConfig": {
+    "host": "",
+    "secure": "true",
+    "auth": {
+      "user": "",
+      "pass": ""
+    }
+  }
+}
