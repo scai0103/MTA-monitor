@@ -1,0 +1,103 @@
+<div layout="column">
+  <div layout flex>
+    <div layout="column" flex="45" ng-attr-flex="quickLinksEnabled ? '45':'100'">
+      <h2 class="dark-text"> {{ 'FILTERS' | translate }} </h2>
+      <md-input-container class="md-block">
+        <label> {{ 'LINES' | translate }} </label>
+        <md-select ng-model="filterLineSelected" ng-change="filterStations()" md-on-close="clearSearchTerm()" data-md-container-class="selectWidhtSearch"
+          class="filter-select" multiple>
+          <md-select-header class="select-header">
+            <input ng-model="searchTerm" ng-keydown="$event.stopPropagation()" type="search" placeholder="{{ 'SEARCH' | translate }}"
+              class="select-searchbox md-text">
+          </md-select-header>
+          <md-option ng-value="line.name" ng-repeat="line in lines | filter:{custom: {filterable: true}} | filter:{displayName: searchTerm} | orderBy:'displayName' track by line.name">
+            {{ line.displayName }}</md-option>
+        </md-select>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label> {{ 'STATIONS' | translate }} </label>
+        <md-select ng-model="filterStationSelected" md-on-close="clearSearchTerm()" data-md-container-class="selectWidhtSearch" class="filter-select"
+          multiple>
+          <md-select-header class="select-header">
+            <input ng-model="searchTerm" ng-keydown="$event.stopPropagation()" type="search" placeholder="{{ 'SEARCH' | translate }}"
+              class="select-searchbox md-text">
+          </md-select-header>
+          <md-option ng-value="STATION_UNDEFINED">[Not defined]</md-option>
+          <md-option ng-value="station.name" ng-repeat="station in filteredStations | filter:{custom: {filterable: true}} | filter:{displayName: searchTerm} | orderBy:'displayName' track by station.name"
+            ng-if="station.name != STATION_UNDEFINED"> {{ station.displayName }}</md-option>
+        </md-select>
+      </md-input-container>
+
+      <md-input-container class="md-block" ng-if="isAuthorized">
+        <div layout="column">
+          <md-checkbox ng-model="$parent.filterStatusProduction" aria-label="" class="dark-check">
+            {{ 'PRODUCTION' | translate }}
+          </md-checkbox>
+          <md-checkbox ng-model="$parent.filterStatusNoProduction" aria-label="" class="dark-check">
+            {{ 'NO_PRODUCTION' | translate }}
+          </md-checkbox>
+        </div>
+      </md-input-container>
+
+      <md-input-container class="md-block">
+
+        <div layout="column">
+          <md-checkbox ng-model="filterStatusError" aria-label="" class="dark-check">
+            {{ 'ERROR' | translate }}
+          </md-checkbox>
+          <md-checkbox ng-model="filterStatusWarning" aria-label="" class="dark-check">
+            {{ 'WARNING' | translate }}
+          </md-checkbox>
+          <md-checkbox ng-model="filterStatusMaintenance" aria-label="" class="dark-check">
+            {{ 'MAINTENANCE' | translate }}
+          </md-checkbox>
+          <md-checkbox ng-model="filterStatusOk" aria-label="" class="dark-check">
+            {{ 'OK' | translate }}
+          </md-checkbox>
+        </div>
+
+      </md-input-container>
+
+      <div flex>
+        <md-button class="md-button md-raised md-accent mantainance-btn" ng-click="clearFilters()">
+          {{ 'CLEAR_ALL' | translate }}
+        </md-button>
+      </div>
+
+
+
+    </div>
+    <div layout="column" flex="50" flex-offset="5" ng-if="quickLinksEnabled">
+
+      <h2 class="dark-text"> {{ 'QUICK_LINKS' | translate }} </h2>
+      <md-input-container class="md-block">
+        <label>{{ 'AREAS' | translate }}</label>
+
+        <md-select ng-model="linkAreaSelected" md-on-close="clearSearchTerm()" data-md-container-class="selectWidhtSearch">
+          <md-select-header class="select-header">
+            <input ng-model="searchTerm" ng-keydown="$event.stopPropagation()" type="search" placeholder="{{ 'SEARCH' | translate }}"
+              class="select-searchbox md-text">
+          </md-select-header>
+          <md-option ng-click="setMapView([50, 50], 4)">
+            <em>None</em>
+          </md-option>
+          <md-option ng-value="area.name" ng-repeat="area in areas | filter:{displayName: searchTerm} | orderBy:'displayName' track by area.name"
+            ng-click="setMapView([area.custom.position.lat, area.custom.position.lng], area.custom.position.zoom)"> {{ area.displayName }}</md-option>
+        </md-select>
+
+      </md-input-container>
+      <!--<md-input-container class="md-block">
+                <label>{{ 'LINES' | translate }}</label>
+                <md-select ng-model="linkLineSelected" md-on-close="clearSearchTerm()" data-md-container-class="selectWidhtSearch" class="filter-select">
+                    <md-select-header class="select-header">
+                        <input ng-model="searchTerm" ng-keydown="$event.stopPropagation()" type="search" placeholder="{{ 'SEARCH' | translate }}" class="select-searchbox md-text">
+                    </md-select-header>
+                    <md-option ng-value="line.name" ng-repeat="line in lines | filter:{displayName: searchTerm} | orderBy:'displayName' track by line.name" ng-click="setMapView([line.custom.position.lat, line.custom.position.lng], line.zoom)"> {{ line.displayName }}</md-option>
+                </md-select>
+            </md-input-container>-->
+    </div>
+
+  </div>
+
+
+</div>

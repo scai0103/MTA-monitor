@@ -1,0 +1,145 @@
+<div layout="column" layout-fill flex ng-if="dynamicItems != null">
+  <div flex="auto" layout="column" layout-fill>
+    <div layout layout-padding layout-align="start end">
+      <div>
+        <md-button aria-label="" ng-click="deviceSelectAll(true)" ng-disabled="dynamicItems.getLength() == 0">
+          {{ 'SELECT_ALL' | translate }}
+        </md-button>
+
+        <md-button aria-label="" ng-click="deviceSelectAll(false)" ng-disabled="dynamicItems.getLength() == 0">
+          {{ 'DESELECT_ALL' | translate }}
+        </md-button>
+      </div>
+      <div>
+        <md-checkbox aria-label="checkbox" class="dark-check dark-check-with-label" ng-model="showScreenshots" ng-disabled="dynamicItems.getLength() == 0">
+          {{ 'SCREENSHOTS' | translate }}
+        </md-checkbox>
+      </div>
+      <div flex="30">
+        <div class="md-toolbar-tools">
+          <md-icon class="material-icons">&#xE8B6;</md-icon>
+          <form flex>
+            <md-input-container class="md-block">
+              <label> {{ 'SEARCH' | translate }} </label>
+              <input type="text" name="searchTerm.term" ng-model="searchTerm.term" ng-model-options="{ debounce: 1000 }" ng-change="onSearchTermChange()">
+            </md-input-container>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div flex="auto" layout="column" layout-align="center center" ng-if="dynamicItems.getLength() == 0">
+      <h2 class="dark-title md-warn">{{ 'NO_DEVICES' | translate }}</h2>
+    </div>
+
+    <md-virtual-repeat-container id="vertical-container" flex layout="column" layout-fill>
+      <div md-virtual-repeat="device in dynamicItems" class="repeated-device-item" md-on-demand layout layout-fill flex ng-class="device.maintenance == false ? (device.error ? 'border-error' : (device.warning ? 'border-warning' : 'border-ok')) : 'border-maintenance'">
+        <div layout="column" layout-fill>
+          <div layout flex="auto">
+            <div flex="5" layout layout-align="center center">
+              <md-checkbox aria-label="checkbox" class="dark-check" ng-model="$parent.deviceCheckedIds[device.name]">
+
+              </md-checkbox>
+            </div>
+            <div flex="30" ng-if="showScreenshots">
+              <div layout="column" layout-fill>
+                <div layout layout-fill>
+                  <div flex="50" layout layout-align="center center" ng-repeat="screenshotUrl in device.custom.screenshotUrl track by $index"
+                    class="screen-container">
+                    <a ng-href="{{ screenshotUrl + '&rnd=' + deviceRandom[device.name] }}" target="_blank">
+                      <div class="numberPreviewOverlay">{{$index + 1}}</div>
+                      <img class="screen-host" ng-src="{{ screenshotUrl + '&rnd=' + deviceRandom[device.name] }}" err-src="{{'http://placehold.it/400x225?text=404' }}"
+                      />
+                    </a>
+                  </div>
+                 <md-button ng-click="showScreenshot(device.name, $index)" ng-attr-class="md-icon-button md-raised">R</md-button>
+                </div>
+              </div>
+            </div>
+            <div flex="65" layout-padding layout="column">
+              <div flex="auto" layout>
+                <div flex="auto">
+                  <h2 class="list-host-text list-host-title" ng-click="goto('/deviceDetails/' + device.name + '/list')">
+                    {{ device.displayName }}
+                    <span>
+                      <md-icon md-font-set="material-icons md-dark">&#xE315;</md-icon>
+                    </span>
+                  </h2>
+                </div>
+              </div>
+              <!-- <div layout flex="auto">
+                <div flex="auto" flex-xs="100" flex-sm="100">
+                  <md-icon md-font-set="material-icons md-dark">&#xE410;</md-icon>
+                  <md-button ng-attr-class="{{ $index == deviceScreenshotIds[device.name] ? 'md-icon-button md-raised' : 'md-icon-button' }}"
+                    ng-repeat="screenshotUrl in device.custom.screenshotUrl track by $index" ng-click="showScreenshot(device.name, $index)">
+                    <md-tooltip md-direction="top">Preview {{ $index + 1 }}</md-tooltip>
+                    {{ $index + 1 }}
+                  </md-button>
+                </div>
+              </div> -->
+              <div flex="auto" layout layout-wrap>
+                <div flex="25" layout="column" flex-sm="100">
+                  <div flex="auto" class="my-2">
+                    <h4 class="list-host-tex list-host-subtitle">{{ 'MODEL' | translate }}: </h4>
+                    <p class="list-host-text"> {{ device.config.model }}</p>
+                  </div>
+                  <div flex="auto" class="my-2">
+                    <h4 class="list-host-tex list-host-subtitle">{{ 'IP_ADDRESS' | translate }}: </h4>
+                    <p class="list-host-text"> {{ device.address }}</p>
+                  </div>
+                  <div flex="auto" class="my-2">
+                    <h4 class="list-host-tex list-host-subtitle">{{ 'SERIAL_NUMBER' | translate }}: </h4>
+                    <p class="list-host-text"> {{ device.config.serialNumber }}</p>
+                  </div>
+                </div>
+                <div flex="40" layout="column" flex-sm="100">
+
+                  <div flex="auto" class="my-2">
+                    <h4 class="list-host-tex list-host-subtitle">{{ 'DEVICE_STATUS' | translate }}:</h4>
+                    <p class="list-host-text" ng-if="!device.maintenance" ng-class="device.error ? 'error-host-text' : ( device.warning ? 'warning-host-text' : 'ok-host-text')">
+                      {{ device.error ? 'ERROR' : ( device.warning ? 'WARNING' : 'OK' ) | translate }}
+                    </p>
+                    <p class="list-host-text" ng-if="device.maintenance">{{ 'MAINTENANCE' | translate }}</p>
+                  </div>
+                  <div flex="auto" class="my-2">
+                    <h4 class="list-host-tex list-host-subtitle">{{ 'STATION' | translate }}: </h4>
+                    <p class="list-host-text">
+                      <span>{{ device.config.stationDisplayName }}</span>
+                      <span>({{ device.config.stationFloorDisplayName }})</span>
+                    </p>
+                  </div>
+                  <div flex="auto" class="my-2">
+                    <h4 class="list-host-tex list-host-subtitle">{{ 'TEMPLATE' | translate }}:</h4>
+                    <p class="list-host-text">{{ device.config.templateDisplayName }}</p>
+                  </div>
+                </div>
+
+                <div flex="35" layout="column" flex-sm="100">
+                  <div flex="auto" class="">
+                    <span ng-repeat="serviceConf in device.custom.templateServices" ng-if="device.config.templateServicesValue[serviceConf.name].params.enabled"
+                      ng-init="service = getCustomServiceValues(device, serviceConf.name)">
+                      <span ng-if="!service || service.error" class="tag service-tag error-service-tag">
+                        {{serviceConf.displayName}}
+                      </span>
+                      <span ng-if="service && !service.error && service.warning" class="tag service-tag warning-service-tag">
+                        {{serviceConf.displayName}}
+                      </span>
+                    </span>
+                    <span ng-repeat="service in device.services" ng-if="!service.custom">
+                      <span ng-if="service.error" class="tag service-tag error-service-tag">
+                        {{service.displayName}}
+                      </span>
+                      <span ng-if="service.warning" class="tag service-tag warning-service-tag">
+                        {{service.displayName}}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </md-virtual-repeat-container>
+  </div>
+</div>

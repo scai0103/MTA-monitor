@@ -1,0 +1,88 @@
+<div class="table-page-box h-100">
+  <div class="row">
+    <div class="col-xs-12">
+      <h1 class="dark-title">{{ pageTitle | translate }}</h1>
+    </div>
+    <div class="col-xs-12">
+      <md-table-container>
+        <table md-table md-row-select multiple ng-model="selected" md-progress="groups" class="custom-datatable">
+          <thead md-head md-order="query.order" md-on-reorder="refreshGroups">
+            <tr md-row>
+              <th class=""> {{ 'NAME' | translate }} </th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr class="md-row md-row-empty" ng-show="groups.length === 0">
+              <td class="md-cell" colspan="2">{{ 'NO_GROUPS_AVAILABLE' | translate }}</td>
+            </tr>
+            <tr md-row md-select="group.id" md-on-select="enableFabToolbar" md-on-deselect="disableFabToolbar" md-select-id="id" md-auto-select
+              ng-repeat="group in groups | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit">
+              <td md-cell>{{group.name}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{ groups.length }}"
+          md-on-paginate="refreshGroups" md-page-select></md-table-pagination>
+      </md-table-container>
+
+    </div>
+    <div class="action-over-btn">
+      <md-fab-speed-dial md-open="isOpen" md-direction="left" ng-class="selectedMode">
+        <md-fab-trigger>
+          <md-button aria-label="menu" class="md-fab md-accent">
+            <md-tooltip md-direction="top" md-visible="tooltipVisible"> {{ 'MENU' | translate }} </md-tooltip>
+            <md-icon md-font-set="material-icons md-24 md-light">&#xE5D2;</md-icon>
+          </md-button>
+        </md-fab-trigger>
+
+        <md-fab-actions>
+          <md-button aria-label="Create" class="md-fab md-raised md-mini" ng-click="addGroup()">
+            <md-tooltip md-direction="top"> {{ 'ADD' | translate }} </md-tooltip>
+            <md-icon md-font-set="material-icons md-accent">&#xE7F0;</md-icon>
+          </md-button>
+          <md-button ng-disabled="selected.length != 1" ng-click="updateGroup()" aria-label="Edit" class="md-fab md-raised md-mini">
+            <md-tooltip md-direction="top"> {{ 'EDIT' | translate }} </md-tooltip>
+            <md-icon md-font-set="material-icons md-accent">&#xE254;</md-icon>
+          </md-button>
+          <md-button ng-disabled="selected.length <= 0" ng-click="showConfirm($event)" aria-label="Delete" class="md-fab md-raised md-mini">
+            <md-tooltip md-direction="top"> {{ 'DELETE' | translate }} </md-tooltip>
+            <md-icon md-font-set="material-icons md-accent">&#xE872;</md-icon>
+          </md-button>
+        </md-fab-actions>
+      </md-fab-speed-dial>
+    </div>
+  </div>
+
+  <section>
+    <md-sidenav class="md-sidenav-right" md-component-id="edit-group-nav">
+      <div layout-fill>
+        <div class="row middle-xs between-xs col-xs-12 topTitle-sidenav mx-0">
+          <div class="col-xs-2">
+            <md-button class="md-icon-button" ng-click="editGroupNavClose()">
+              <md-icon md-font-set="material-icons md-24 md-light">&#xE5CD;</md-icon>
+            </md-button>
+          </div>
+          <div class="col-xs-8">
+            <h1 class="md-title title-form">{{ groupModel.id ? 'EDIT_GROUP' : 'ADD_NEW_GROUP' | translate }} </h1>
+          </div>
+        </div>
+        <div class="row white-back col-xs-12 mx-0 middle-xs" layout-padding>
+          <div class="col-xs-1"></div>
+          <form name="groupForm" ng-submit="handleSubmit()" class="col-xs-10 row" layout-padding>
+            <md-input-container class="md-block" flex="40">
+              <label> {{ 'NAME' | translate }} </label>
+              <input type="text" name="name" ng-model="groupModel.name" required="required" />
+              <div ng-messages for="groupForm.name.$error" role="alert">
+                <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+              </div>
+            </md-input-container>
+            <div class="col-xs-12 row end-xs">
+              <md-button type="submit" ng-disabled="groupForm.$invalid || isFormSubmitting" aria-label="Create Groups" class="md-raised md-accent  col-xs-3 col-md-2 mx-0">
+                {{ 'SAVE' | translate }}
+              </md-button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </md-sidenav>
+  </section>

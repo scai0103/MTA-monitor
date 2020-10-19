@@ -1,0 +1,22 @@
+<form name="deviceWizardForm" ng-submit="handleSubmit()" class="col-xs-12 px-0">
+    <md-tabs layout="column" flex layout-fill md-selected="tabCurrentIndex">
+      <md-tab label="{{ 'STEP_1' | translate }}" id="s1">
+        <md-tab-content class="px-0">
+          <ng-include src="'/views/devices/wizard/_step1.html'" ng-init="" class="col-xs-12 mx-0"></ng-include>
+        </md-tab-content>
+      </md-tab>
+
+      <md-tab id="s2" label="{{ 'STEP_2' | translate }}">
+        <md-tab-content class="px-0">
+          <ng-include src="'/views/devices/wizard/_step2.html'" ng-init="" class="col-xs-12 mx-0" layout-fill>
+          </ng-include>
+        </md-tab-content>
+      </md-tab>
+
+      <md-tab id="s3" label="{{ 'STEP_3' | translate }}">
+        <md-tab-content class="px-0">
+          <ng-include src="'/views/devices/wizard/_step3.html'" ng-init="" class="col-xs-12 mx-0"></ng-include>
+        </md-tab-body>
+      </md-tab>
+    </md-tabs>
+  </form>

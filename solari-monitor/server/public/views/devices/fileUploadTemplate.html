@@ -1,0 +1,39 @@
+<div layout="column">
+  <div layout="column" flex="100">
+    <h2 class="dark-text"> {{ 'UPLOAD_DEVICES' | translate }} </h2>
+  </div>
+  <div layout="column" flex="100" ng-form name="fileUploadForm">
+    <input class="ng-hide" id="upload-input" name="import" type="file" required="required" accept=".csv" ng-disabled="isFileUploading"
+    />
+    <label for="upload-input" class="md-button md-raised md-accent mx-0 px-0" ng-disabled="isFileUploading">{{ 'CHOOSE_FILE' | translate }}</label>
+    <div ng-messages for="fileUploadForm.import.$error" role="alert">
+      <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+    </div>
+
+    <md-progress-linear md-mode="determinate" value="{{ progressValue }}" ng-if="isFileUploading"></md-progress-linear>
+
+  </div>
+
+  <div layout="column my-2" flex="100" layout-align="space-around">
+    <md-progress-circular md-mode="indeterminate" class="md-accent" ng-if="isReportLoading && uploadReport == null"></md-progress-circular>
+  </div>
+
+  <div ng-if="uploadReport">
+    <div layout="column" flex="100">
+      <h3 class="dark-text"> {{ 'UPLOAD_REPORT' | translate }} {{ formatDate(uploadReport.date) }} </h3>
+    </div>
+    <div layout="column my-2" flex="100">
+      <div class="box-log-upload">
+        <div>
+          <code>{{ uploadReport.message }}</code>
+        </div>
+        <div ng-if="uploadReport.logs.length">
+          <code>Log:</code>
+        </div>
+        <div ng-repeat="item in uploadReport.logs">
+          <code>{{item.message}}</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

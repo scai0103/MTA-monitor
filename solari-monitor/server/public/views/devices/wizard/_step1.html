@@ -1,0 +1,108 @@
+<div class="row table-page-box">
+  <md-input-container class="md-block col-xs-12 col-md-12" ng-if="isAuthorized">
+    <md-checkbox ng-model="device.config.production" aria-label="production">
+      {{ 'PRODUCTION' | translate }}
+    </md-checkbox>
+    <div ng-messages for="deviceWizardForm.production.$error" role="alert">
+      <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block col-xs-8 col-md-6">
+    <label> {{ 'IP_ADDRESS' | translate }} </label>
+    <input type="text" name="address" required="required" autocomplete="foo" ng-model="device.address" exclude-values="excludeAddresses" ng-pattern="/^([0-9]{1,3})[.]([0-9]{1,3})[.]([0-9]{1,3})[.]([0-9]{1,3})$/"
+    />
+    <div ng-messages for="deviceWizardForm.address.$error" role="alert">
+      <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+      <div ng-message="pattern">{{ 'VALIDATION_DEVICE_ADDRESS_PATTERN' | translate }}</div>
+      <div ng-message="excludeValues">{{ 'VALIDATION_DEVICE_ADDRESS_USED' | translate }}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block col-xs-2 col-md-6">
+    <md-button type="button" class="md-fab md-raised  md-accent md-mini" ng-click="getDeviceConfiguration()" ng-disabled="deviceWizardForm.address.$invalid">
+      <md-tooltip md-direction="top"> {{ 'CONFIG_DEVICE' | translate }} </md-tooltip>
+      <md-icon md-font-set="material-icons md-24 md-light">&#xE627;</md-icon>
+    </md-button>
+  </md-input-container>
+  <md-input-container class="md-block col-xs-12 col-md-6">
+    <label> {{ 'DISPLAY_NAME' | translate }} </label>
+    <input type="text" name="displayName" required="required" ng-model="device.displayName" exclude-values="excludeNames" />
+    <div ng-messages for="deviceWizardForm.displayName.$error" role="alert">
+      <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+      <div ng-message="excludeValues">{{ 'VALIDATION_DEVICE_NAME_USED' | translate }}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block col-xs-12 col-md-6">
+    <label> {{ 'MODEL' | translate }} </label>
+    <input type="text" name="model" required="required" ng-model="device.config.model" />
+    <div ng-messages for="deviceWizardForm.model.$error" role="alert">
+      <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block col-xs-12 col-md-6">
+    <label> {{ 'SERIAL_NUMBER' | translate }} </label>
+    <input type="text" name="serialNumber" required="required" ng-model="device.config.serialNumber" />
+    <div ng-messages for="deviceWizardForm.serialNumber.$error" role="alert">
+      <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+    </div>
+  </md-input-container>
+
+  <md-input-container class="md-block col-xs-12 col-md-6">
+    <label> {{ 'STATION' | translate }} </label>
+    <md-select name="station" aria-label="station" ng-model="device.config.stationName" ng-change="onStationChange('{{ device.config.stationName }}')" md-on-close="clearSearchTerm()"
+      ng-disabled="!isNewDevice" data-md-container-class="selectWidhtSearch" class="filter-select" required="required">
+      <md-select-header class="select-header">
+        <input ng-model="searchTerm" ng-keydown="$event.stopPropagation()" type="search" placeholder="{{ 'SEARCH' | translate }}"
+          class="select-searchbox md-text">
+      </md-select-header>
+      <md-option ng-value="station.name" ng-repeat="station in stations | filter:{displayName: searchTerm} | orderBy:'displayName' track by station.name"
+        ng-if="!isNewDevice || station.name != STATION_UNDEFINED">
+        {{ station.displayName }} </md-option>
+    </md-select>
+    <div class="md-errors-spacer"></div>
+    <div ng-messages for="deviceWizardForm.station.$error" role="alert">
+      <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block col-xs-12 col-md-6">
+    <label> {{ 'FLOOR' | translate }} </label>
+    <md-select name="floor" aria-label="floor" ng-model="device.config.stationFloorId" required="required" ng-disabled="!device.config.stationName">
+      <md-option ng-value="-1">{{ 'FLOOR' | translate }} 0</md-option>
+      <md-option ng-value="floor.name" ng-repeat="floor in stationFloors track by $index">
+        {{ floor.position.displayName }}
+      </md-option>
+    </md-select>
+    <div class="md-errors-spacer"></div>
+    <div ng-messages for="deviceWizardForm.floor.$error" role="alert">
+      <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block col-xs-12 col-md-6">
+    <label> {{ 'TEMPLATE' | translate }} </label>
+    <md-select name="template" aria-label="template" ng-model="device.config.templateName" ng-change="onTemplateChange('{{ device.config.templateName }}')" required="required">
+      <md-option ng-value="template.name" ng-repeat="template in templates | orderBy:'displayName' track by template.name"> {{ template.displayName }} </md-option>
+    </md-select>
+    <div class="md-errors-spacer"></div>
+    <div ng-messages for="deviceWizardForm.template.$error" role="alert">
+      <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block col-xs-12 col-md-6">
+    <label> {{ 'GROUPS' | translate }} </label>
+    <md-select name="groups" aria-label="groups" ng-model="device.config.maintainerGroupIds" required="required" multiple>
+      <md-option ng-value="group.id" ng-repeat="group in groups"> {{ group.name }} </md-option>
+    </md-select>
+    <div class="md-errors-spacer"></div>
+    <div ng-messages for="deviceWizardForm.groups.$error" role="alert">
+      <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+    </div>
+  </md-input-container>
+  <md-input-container class="md-block col-xs-12 col-md-6">
+    <label> {{ 'NOTE' | translate }} </label>
+    <textarea name="notes" ng-model="device.notes"></textarea>
+  </md-input-container>
+  <div class="col-xs-12 row end-xs">
+    <md-button type="button" class="md-raised md-accent mx-0 col-xs-2 col-md-1" ng-click="tabGoToNext()">
+      {{ 'NEXT' | translate }}
+    </md-button>
+  </div>
+</div>

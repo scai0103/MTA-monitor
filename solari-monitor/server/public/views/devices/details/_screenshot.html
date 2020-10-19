@@ -1,0 +1,9 @@
+<div layout="column" class="my-2">
+  <div layout flex ng-if="showScreenshot">
+    <div flex="50" layout-margin ng-repeat="screenshotUrl in device.custom.screenshotUrl track by $index">
+      <img class="img-screenshot" ng-src="{{ screenshotUrl + '&v=' + random }}" err-src="{{ imageBasePath + '404.png' }}"
+      />
+    </div>
+  </div>
+
+</div>

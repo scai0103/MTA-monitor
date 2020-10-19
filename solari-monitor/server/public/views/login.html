@@ -1,0 +1,36 @@
+<div class="login-container" layout-align="space-around" layout="column" layout-fill>
+  <div ng-app="LoginForm" layout="row" layout-align="center center" layout-padding ng-cloak="ng-cloak" class="login-form" flex="auto">
+    <md-card flex="auto" flex-gt-sm="50" flex-gt-md="33">
+      <md-card-content>
+        <form name="loginForm" ng-submit="submitForm()">
+          <md-input-container class="md-block">
+            <label>{{ 'EMAIL' | translate }}</label>
+            <input type="email" name="username" ng-model="credentials.username" required="required" autocorrect="off" autocapitalize="off" />
+            <div ng-messages for="loginForm.username.$error" role="alert">
+              <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>{{ 'PASSWORD' | translate }}</label>
+            <input type="password" name="password" ng-model="credentials.password" required="required" />
+            <div ng-messages for="loginForm.password.$error" role="alert">
+              <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+            </div>
+          </md-input-container>
+          <section layout="row" layout-align="end center" layout-wrap>
+            <md-button type="submit" class="md-fab md-accent" ng-disabled="!loginForm.$valid" aria-label="Login">
+              <md-tooltip md-direction="left">
+                {{ 'LOGIN' | translate }}
+              </md-tooltip>
+              <md-icon md-font-set="material-icons md-36 md-light login-icon">&#xE315;</md-icon>
+            </md-button>
+          </section>
+        </form>
+      </md-card-content>
+    </md-card>
+  </div>
+
+  <div class="logo-big-box">
+    <img class="logo_big" src="{{ imageBasePath + 'logo_big.png' }}" />
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div layout="column" layout-fill class="map-list-container" refresh-on-idle>
+  <div layout="column" flex="auto" layout-fill ng-if="currentView == CURRENT_VIEW_MAP">
+    <leaflet map-id="mapId" center="center" image-overlay-url="mapImagePath" marker-cluster="mapMarkerCluster" markers="mapMarkers"
+      save-map-state="true"></leaflet>
+  </div>
+
+  <div layout="column" flex="auto" ng-if="currentView == CURRENT_VIEW_LIST" layout-fill>
+    <ng-include src="'/views/devices/list.html'" flex layout-fill></ng-include>
+  </div>
+</div>
+<ng-include src="'/views/devices/_switch.html'"></ng-include>
+<ng-include src="'/views/devices/_menu.html'"></ng-include>
+
+<ng-include src="'/views/devices/_sidebar.html'" ng-init="currentView"></ng-include>

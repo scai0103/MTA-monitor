@@ -1,0 +1,1 @@
+var servicesDomain = angular.module('SolariMonitor.services', []);

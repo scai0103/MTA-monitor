@@ -1,0 +1,475 @@
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  /*
+  ******************************************
+  ******************************************
+    Disable animations
+  ******************************************
+  ******************************************
+  */
+
+  /** disable transitions and animations for tab-contents**/
+  md-tab-content.md-right:not(.md-active) {
+    animation: none !important;
+    -webkit-animation: none !important;
+  }
+
+  md-tab-content.md-left:not(.md-active) {
+    animation: none !important;
+    -webkit-animation: none !important;
+  }
+
+  md-tab-content.md-left:not(.md-active) * {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  md-tab-content.md-right:not(.md-active) * {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .md-tab {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  /**disable slider animation for thumbs **/
+  md-slider .md-focus-thumb {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+    animation: none !important;
+    -webkit-animation: none !important;
+  }
+  md-slider ._md-thumb{
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+  md-option{
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+  /*Disable transition for opening menu.*/
+
+  /**disable on dialogs**/
+  md-dialog._md-transition-out {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  md-dialog._md-transition-in {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  /**Disable on ripple buttons**/
+  .md-ripple.md-ripple-placed {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .md-ripple-container, .md-ripple-placed {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  /**Disable checkbox **/
+  md-checkbox ._md-icon {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  md-tabs-wrapper md-next-button, md-tabs-wrapper md-prev-button
+  {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  md-pagination-wrapper {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  ._md-subheader-wrapper:not(.md-sticky-no-effect) {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  ._md-sticky-clone[sticky-state=active]:not(.md-sticky-no-effect) ._md-subheader-inner {
+    -webkit-animation: none !important;
+    animation: none !important;
+  }
+
+  /**Disable on all other buttons**/
+  .md-button {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  /**Disable fading labels**/
+  md-input-container label {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  /** Disable slider animations**/
+  md-slider ._md-thumb-container, ._md-focus-ring, ._md-track-fill, ._md-thumb {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  md-input-container .md-char-counter, md-input-container .md-input-message-animation {
+    transition: none !important;
+  }
+
+  /*  Disable dropdown animations*/
+
+  md-select-menu {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  md-select-menu md-content {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  ._md-select-menu-container._md-leave {
+    transition: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  md-tab-content {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+  }
+
+  md-ink-bar.md-right {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+  }
+
+  md-ink-bar.md-left {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+  }
+
+  md-tab-content.md-right {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+  }
+
+  md-tab-content.md-left {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+  }
+
+  md-sidenav.md-sidenav-left {
+    -webkit-transform: none !important;
+    transform: none !important;
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+  }
+
+  md-sidenav.md-sidenav-right {
+    -webkit-transform: none !important;
+    transform: none !important;
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+  }
+
+  md-backdrop {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+  }
+
+
+  /*
+  ******************************************
+  ******************************************
+  Disable box shadows
+  ******************************************
+  ******************************************
+  */
+
+  md-card {
+    border: 1px solid rgba(0, 0, 0, .14) !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+  }
+
+  md-dialog {
+    border: 1px solid rgba(0, 0, 0, .14) !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+  }
+
+  md-select-menu {
+    border: 1px solid rgba(0, 0, 0, .14) !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+  }
+
+  .md-button.md-fab,
+  .md-button.md-raised {
+    border: 1px solid rgba(0, 0, 0, .14) !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+  }
+
+  md-toast .md-toast-content {
+    /**no border needed here**/
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+  }
+
+  /*
+  ******************************************
+  ******************************************
+  Theme
+  ******************************************
+  ******************************************
+  */
+
+  md-menu-content.md-default-theme, md-menu-content {
+    background-color: rgb(255,255,255);
+  }
+
+  md-card.md-default-theme, md-card {
+    color: rgba(0,0,0,0.87);
+    background-color: rgb(255,255,255);
+    border-radius: 2px;
+  }
+
+  .md-button.md-default-theme.md-accent.md-fab, .md-button.md-accent.md-fab, .md-button.md-default-theme.md-accent.md-raised, .md-button.md-accent.md-raised {
+    color: rgb(255,255,255);
+    background-color: rgb(0,150,136);
+  }
+
+  .md-button.md-default-theme.md-raised, .md-button.md-raised {
+    background-color: rgb(255,255,255);
+  }
+
+  .md-button.md-default-theme.md-raised md-icon, .md-button.md-raised md-icon {
+    color: rgb(0,150,136);
+  }
+
+  .md-button.md-default-theme.md-raised:not([disabled]):hover, .md-button.md-raised:not([disabled]):hover {
+    background-color: rgb(255,255,255);
+  }
+
+  .md-button.md-default-theme.md-warn.md-fab, .md-button.md-warn.md-fab, .md-button.md-default-theme.md-warn.md-raised, .md-button.md-warn.md-raised {
+    color: rgba(0,0,0,0.87);
+    background-color: rgb(255,87,34);
+  }
+
+  .md-button.md-default-theme.md-warn:not([disabled]) md-icon, .md-button.md-warn:not([disabled]) md-icon {
+    color: rgb(255,87,34);
+  }
+
+  .md-button.md-default-theme.md-warn.md-fab:not([disabled]).md-focused, .md-button.md-warn.md-fab:not([disabled]).md-focused, .md-button.md-default-theme.md-warn.md-fab:not([disabled]):hover, .md-button.md-warn.md-fab:not([disabled]):hover, .md-button.md-default-theme.md-warn.md-raised:not([disabled]).md-focused, .md-button.md-warn.md-raised:not([disabled]).md-focused, .md-button.md-default-theme.md-warn.md-raised:not([disabled]):hover, .md-button.md-warn.md-raised:not([disabled]):hover {
+    background-color: rgb(255,68,8) !important;
+  }
+
+  .md-button.md-default-theme.md-fab[disabled], .md-button.md-fab[disabled], .md-button.md-default-theme.md-raised[disabled], .md-button.md-raised[disabled] {
+    background-color: rgba(0,0,0,0.32);
+  }
+
+  .md-button.md-default-theme:not([disabled]).md-focused, .md-button:not([disabled]).md-focused, .md-button.md-default-theme:not([disabled]):hover, .md-button:not([disabled]):hover {
+    background-color: rgba(207,216,220,0.2);
+  }
+
+  .md-button.md-default-theme.md-accent.md-fab:not([disabled]).md-focused, .md-button.md-accent.md-fab:not([disabled]).md-focused, .md-button.md-default-theme.md-accent.md-fab:not([disabled]):hover, .md-button.md-accent.md-fab:not([disabled]):hover, .md-button.md-default-theme.md-accent.md-raised:not([disabled]).md-focused, .md-button.md-accent.md-raised:not([disabled]).md-focused, .md-button.md-default-theme.md-accent.md-raised:not([disabled]):hover, .md-button.md-accent.md-raised:not([disabled]):hover {
+    background-color: rgb(0,124,113);
+  }
+
+  md-card.md-default-theme, md-card {
+    color: rgba(0,0,0,0.87);
+    background-color: rgb(255,255,255);
+    border-radius: 2px;
+  }
+
+  md-input-container.md-default-theme .md-placeholder, md-input-container .md-placeholder, md-input-container.md-default-theme label, md-input-container label {
+    color: rgba(0,0,0,0.38);
+  }
+
+  md-input-container.md-default-theme:not(.md-input-focused):not(.md-input-invalid) label.md-required:after, md-input-container:not(.md-input-focused):not(.md-input-invalid) label.md-required:after {
+    color: rgba(0,0,0,0.54);
+  }
+
+  md-input-container.md-default-theme .md-input, md-input-container .md-input {
+    color: rgba(0,0,0,0.87);
+    border-color: rgba(0,0,0,0.12);
+  }
+
+  .md-button.md-default-theme.md-accent, .md-button.md-accent {
+    color: rgb(0,150,136);
+  }
+
+  md-nav-bar.md-default-theme md-nav-ink-bar, md-nav-bar md-nav-ink-bar {
+    color: rgb(0,150,136);
+    background: rgb(0,150,136);
+  }
+
+  md-input-container.md-default-theme .md-placeholder, md-input-container .md-placeholder, md-input-container.md-default-theme label, md-input-container label {
+    color: rgba(0,0,0,0.38);
+  }
+
+  md-input-container.md-default-theme:not(.md-input-invalid).md-input-has-value label, md-input-container:not(.md-input-invalid).md-input-has-value label {
+    color: rgba(0,0,0,0.54);
+  }
+
+  md-select.md-default-theme .md-select-value, md-select .md-select-value {
+    border-bottom-color: rgba(0,0,0,0.12);
+  }
+
+  md-select.md-default-theme .md-select-value.md-select-placeholder, md-select .md-select-value.md-select-placeholder {
+    color: rgba(0,0,0,0.38);
+  }
+
+  md-select.md-default-theme .md-select-icon, md-select .md-select-icon {
+    color: rgba(0,0,0,0.54);
+  }
+
+  md-checkbox.md-default-theme.md-checked .md-icon, md-checkbox.md-checked .md-icon {
+    background-color: rgba(0,150,136,0.87);
+  }
+
+  md-checkbox.md-default-theme.md-checked .md-ink-ripple, md-checkbox.md-checked .md-ink-ripple {
+    color: rgba(0,150,136,0.87);
+  }
+
+  md-select-menu.md-default-theme md-content, md-select-menu md-content {
+    background-color: rgb(255,255,255);
+  }
+
+  .md-panel.md-tooltip.md-default-theme, .md-panel.md-tooltip {
+    color: rgba(0,0,0,0.87);
+    background-color: rgb(177,192,198);
+  }
+
+  md-dialog.md-default-theme, md-dialog {
+    border-radius: 4px;
+    background-color: rgb(255,255,255);
+    color: rgba(0,0,0,0.87);
+  }
+
+  .md-default-theme .md-calendar-date-disabled, .md-calendar-date-disabled, .md-default-theme .md-calendar-month-label-disabled, .md-calendar-month-label-disabled {
+    color: rgba(0,0,0,0.38);
+  }
+
+  .md-button.md-default-theme.md-primary.md-fab, .md-button.md-primary.md-fab, .md-button.md-default-theme.md-primary.md-raised, .md-button.md-primary.md-raised {
+    color: rgba(0,0,0,0.87);
+    background-color: rgb(69,90,100);
+  }
+
+  .md-button.md-default-theme.md-primary.md-fab:not([disabled]).md-focused, .md-button.md-primary.md-fab:not([disabled]).md-focused, .md-button.md-default-theme.md-primary.md-fab:not([disabled]):hover, .md-button.md-primary.md-fab:not([disabled]):hover, .md-button.md-default-theme.md-primary.md-raised:not([disabled]).md-focused, .md-button.md-primary.md-raised:not([disabled]).md-focused, .md-button.md-default-theme.md-primary.md-raised:not([disabled]):hover, .md-button.md-primary.md-raised:not([disabled]):hover {
+    background-color: rgb(59,76,85);
+  }
+
+  .md-button.md-default-theme.md-primary.md-raised, .md-button.md-primary.md-raised, .md-button.md-default-theme.md-primary.md-fab, .md-button.md-primary.md-fab {
+    color: #fff;
+  }
+
+  .md-dialog-container, md-dialog {
+    display: flex !important;
+  }
+
+  md-toolbar.md-default-theme.md-hue-1:not(.md-menu-toolbar), md-toolbar.md-hue-1:not(.md-menu-toolbar) {
+    background-color: rgb(114,143,157);
+    color: rgba(0,0,0,0.87);
+  }
+
+  .mdp-clock .md-button {
+    box-shadow: none !important;
+    background-color: transparent !important;
+    border: 0px !important;
+  }
+
+  .mdp-clock .md-button.md-default-theme.md-raised,
+  .mdp-clock .md-button.md-raised {
+    color: rgb(148,168,177) !important;
+  }
+
+  .mdp-clock .md-button.md-default-theme.md-primary.md-fab,
+  .mdp-clock .md-button.md-primary.md-fab,
+  .mdp-clock .md-button.md-default-theme.md-primary.md-raised,
+  .mdp-clock .md-button.md-primary.md-raised {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(69,90,100) !important;
+  }
+
+  md-progress-circular.md-default-theme.md-accent,
+  md-progress-circular.md-accent path {
+    stroke: rgb(0, 150, 136);
+  }
+
+  /*
+  ******************************************
+  ******************************************
+    Fix flexboxgrid
+  ******************************************
+  ******************************************
+  */
+
+  .flex {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+
+
+  .end-xs {
+    text-align: right;
+  }
+
+  input[type=text]::-ms-clear {  display: none; width : 0; height: 0; }
+  input[type=text]::-ms-reveal {  display: none; width : 0; height: 0; }
+}

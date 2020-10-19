@@ -1,0 +1,16 @@
+<div class="switch-box">
+  <div layout>
+    <div flex="auto">
+      <md-button class="md-raised md-accent" ng-disabled="currentView == 'list'" ng-click="goto('stations/list')">
+        <md-tooltip md-direction="bottom"> {{ 'LIST' | translate }} </md-tooltip>
+        <md-icon md-font-set="material-icons md-light">&#xE8EF;</md-icon>
+      </md-button>
+    </div>
+    <div flex="auto">
+      <md-button class="md-raised md-accent" ng-disabled="currentView == 'map'" ng-click="goto('stations/map')">
+        <md-tooltip md-direction="bottom"> {{ 'MAP' | translate }} </md-tooltip>
+        <md-icon md-font-set="material-icons  md-light">&#xE55B;</md-icon>
+      </md-button>
+    </div>
+  </div>
+</div>

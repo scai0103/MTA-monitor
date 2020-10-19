@@ -1,0 +1,81 @@
+<div >
+  <div layout="column" layout-margin ng-if="mode !== MODE_LIST">
+    <h2>Hardware status</h2>
+    <hr></hr>
+    <h3>WiFi</h3>
+    <div layout="row" style="font-weight: bold;">
+      <p flex=5></p>
+      <p flex=15>Frequency [MHz]:<span>{{search(status.service,'localhost-wifi-frequency').program.output}}</span></p>
+      <p flex=15>Channel:<span>{{search(status.service,'localhost-wifi-channel').program.output}}</span></p>
+      <p flex=15>Quality:<span>{{search(status.service,'localhost-wifi-quality').program.output}}%</span></p>
+      <p flex=15>Signal:<span>{{search(status.service,'localhost-wifi-signal').program.output}}Db</span></p>
+      <p flex=15>IP:<span>{{search(status.service,'wlan0_ip').program.output}}</span></p>
+    </div>
+    <hr></hr>
+    <h4>TFT Panel Front (CPU) side</h4>
+    <div layout="row" style="font-weight: bold;">
+      <p flex=5></p>
+      <p flex=15>Temperature:<span>{{search(status.service,'check_tft0_temperature').program.output}} °C</span></p>
+      <p flex=15>Light Sensor:<span>{{search(status.service,'check_tft0_light_sensor').program.output}}</span></p>
+      <p flex=15>Firmware:<span>{{search(status.service,'check_tft0_firmware').program.output}}</span></p>
+    </div>
+    <hr></hr>
+    <div>
+      <h4>TFT Panel Rear side</h4>
+      <div layout="row" style="font-weight: bold;">
+        <p flex=5></p>
+        <p flex=15>Temperature:<span>{{search(status.service,'check_tft1_temperature').program.output}} °C</span></p>
+        <p flex=15>Light Sensor:<span>{{search(status.service,'check_tft1_light_sensor').program.output}}</span></p>
+        <p flex=15>Firmware:<span>{{search(status.service,'check_tft1_firmware').program.output}}</span></p>
+      </div>
+      <hr></hr>
+    </div>
+    <h4>CPU</h4>
+    <div layout="row" style="font-weight: bold;">
+      <p flex=5></p>
+      <p flex=15>Core Temperature:<span>{{search(status.service,'localhost-core-temperature').program.output}} °C</span></p>
+      <p flex=15>Mainboard Temperature:<span>{{search(status.service,'localhost-board-temperature').program.output}} °C</span></p>
+    </div>
+    <hr></hr>
+    <h2>Software status</h2>
+    <hr></hr>
+    <h3>Operating System</h3>
+    <div layout="row" style="font-weight: bold;">
+      <p flex=5></p>
+      <p flex=15>Used memory:<span>{{search(status.service,'localhost-memory').system.memory.percent}}%</span></p>
+      <p flex=15>Load Average 1 Minute:<span>{{search(status.service,'localhost-memory').system.load.avg01*100}}%</span></p>
+      <p flex=15>Load Average 15 Minute:<span>{{search(status.service,'localhost-memory').system.load.avg15*100}}%</span></p>
+      <p flex=15>Disk:<span>{{search(status.service,'localhost-root-file-system').block.percent}}% of {{search(status.service,'localhost-root-file-system').block.total }} MB</span></p>
+    </div>
+  </div>
+
+  <div ng-if="mode === MODE_LIST" layout="column" flex>
+    <div flex="auto" class="my-2">
+      <h4 class="list-host-tex list-host-subtitle">
+        {{ 'TEMPERATURE' | translate }} <span ng-if="isDoubleFace">(F/R)</span>:
+      </h4>
+      <p class="list-host-text">
+        <span ng-if="status.service">{{ search(status.service,'check_tft0_temperature').program.output }} °C</span>
+        <span ng-if="status.service && isDoubleFace"> / {{ search(status.service,'check_tft1_temperature').program.output }} °C</span>
+      </p>
+    </div>
+    <div flex="auto" class="my-2">
+      <h4 class="list-host-tex list-host-subtitle">
+        {{ 'LIGHT_SENSOR' | translate }} <span ng-if="isDoubleFace">(F/R)</span>:
+      </h4>
+      <p class="list-host-text">
+        <span ng-if="status.service">{{ search(status.service,'check_tft0_light_sensor').program.output }}</span>
+        <span ng-if="status.service && isDoubleFace"> / {{ search(status.service,'check_tft1_light_sensor').program.output }}</span>
+      </p>
+    </div>
+    <div flex="auto" class="my-2">
+      <h4 class="list-host-tex list-host-subtitle">
+        {{ 'FIRMWARE' | translate }} <span ng-if="isDoubleFace">(F/R)</span>:
+      </h4>
+      <p class="list-host-text">
+        <span ng-if="status.service">{{ search(status.service,'check_tft0_firmware').program.output }}</span>
+        <span ng-if="status.service && isDoubleFace"> / {{ search(status.service,'check_tft1_firmware').program.output }}</span>
+      </p>
+    </div>
+  </div>
+</div>

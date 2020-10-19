@@ -1,0 +1,6 @@
+<div class="">
+  <input class="ng-hide" id="{{ name }}" name="{{ name }}" type="file" accept="{{ accept }}" ng-disabled="isFileUploading" />
+  <label for="{{ name }}" class="md-button md-raised md-accent mx-0" ng-disabled="isFileUploading">{{ 'CHOOSE_FILE' | translate }}</label>
+
+  <md-progress-linear md-mode="determinate" value="{{ progressValue }}" ng-if="isFileUploading"></md-progress-linear>
+</div>

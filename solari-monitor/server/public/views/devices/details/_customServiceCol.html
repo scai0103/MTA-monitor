@@ -1,0 +1,12 @@
+<div class="my-2 error-host-text" ng-if="!service">n/a</div>
+<div class="my-2" ng-if="service">
+  <span ng-repeat="face in service.faces">
+    <span ng-class="face.error ? 'error-host-text' : (face.warning ? 'warning-host-text' : 'ok-host-text')">
+      {{ face.value }}
+    </span>
+    <span ng-if="$index == 0 && service.faces.length > 1">({{ 'FRONT' | translate }})</span>
+    <span ng-if="$index == 1">({{ 'REAR' | translate }})</span>
+    <span ng-if="$index < service.faces.length - 1">/</span>
+  </span>
+
+</div>

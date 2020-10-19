@@ -1,0 +1,56 @@
+<div layout="column" layout-fill flex ng-if="dynamicItems != null">
+  <div flex="auto" layout="column" layout-align="center center" ng-if="dynamicItems.getLength() == 0">
+    <h2 class="dark-title md-warn">{{ 'NO_STATIONS' | translate }}</h2>
+  </div>
+  <div flex="auto" layout="column" layout-fill ng-if="dynamicItems.getLength() > 0">
+    <div layout layout-padding flex="10" layout-align="start end">
+      <!-- <div>
+        <md-button aria-label="" ng-click="deviceSelectAll(true)">
+          {{ 'SELECT_ALL' | translate }}
+        </md-button>
+
+        <md-button aria-label="" ng-click="deviceSelectAll(false)">
+          {{ 'DESELECT_ALL' | translate }}
+        </md-button>
+      </div> -->
+    </div>
+
+    <md-virtual-repeat-container id="vertical-container" flex layout="column" layout-fill>
+      <div md-virtual-repeat="station in dynamicItems" class="repeated-station-item" md-on-demand layout layout-fill flex>
+        <div layout="column" layout-fill>
+          <div layout flex="auto">
+            <div flex="5" layout layout-align="center center">
+              <!-- <md-checkbox aria-label="checkbox" class="dark-check" ng-model="$parent.stationCheckedIds[station.name]">
+
+              </md-checkbox> -->
+            </div>
+            <div flex="65" layout-padding layout="column">
+              <div flex="auto" layout>
+                <div flex="auto">
+                  <h2 class="list-host-text list-host-title" ng-click="goto('/stationDetails/' + station.name + '/map/stations/list')">
+                    {{ station.displayName }}
+                    <span>
+                      <md-icon md-font-set="material-icons md-dark">&#xE315;</md-icon>
+                    </span>
+                  </h2>
+                </div>
+              </div>
+              <div flex="auto" layout layout-wrap>
+                <div flex="25" layout="column" flex-sm="100">
+                  <div flex="auto" class="my-2">
+                    <h4 class="list-host-tex list-host-subtitle">{{ 'LINES' | translate }}: </h4>
+                    <p class="list-host-text"><span ng-repeat="lineName in station.custom.lineNames">{{ lineName }} </span></p>
+                  </div>
+                  <div flex="auto" class="my-2">
+                    <h4 class="list-host-tex list-host-subtitle">{{ 'DEVICES' | translate }}: </h4>
+                    <p class="list-host-text"> {{ station.deviceCount }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </md-virtual-repeat-container>
+  </div>
+</div>

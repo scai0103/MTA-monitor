@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html ng-app="SolariMonitor" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="IE=edge" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="/assets/css/lib/angular-material.min.css">
+  <link rel="stylesheet" href="/assets/css/lib/md-data-table.min.css">
+  <link rel="stylesheet" href="/assets/css/lib/leaflet.css">
+  <link rel="stylesheet" href="/assets/css/lib/MarkerCluster.css">
+  <link rel="stylesheet" href="/assets/css/lib/MarkerCluster.Default.css">
+  <link rel="stylesheet" href="/assets/css/lib/angular-toastr.min.css">
+  <link rel="stylesheet" href="/assets/css/lib/material-icons.css">
+
+  <link rel="stylesheet" href="/assets/css/lib/flexboxgrid.min.css" type="text/css">
+  <link rel="stylesheet" href="/assets/css/custom.css">
+  <link rel="stylesheet" href="/assets/css/lib/md-time-picker.css">
+  <link rel="stylesheet" href="/assets/css/ie11-fix.css">
+  <title>Solari Monitor</title>
+</head>
+
+<body ng-controller="ApplicationController" ng-cloak layout="column" layout-fill md-no-ink>
+  <div layout="column" layout-fill>
+    <div layout="column">
+      <div layout flex class="navbar-backgroud ">
+        <!-- dropdown menu small screen-->
+        <div flex="90" layout="column" hide-md hide-lg hide-gt-lg>
+          <md-menu md-position-mode="target-right target" ng-if="isAuthenticated()">
+            <!-- Trigger element is a md-button with an icon -->
+            <md-button class="md-button" ng-click="$mdOpenMenu($event)">
+              <md-icon md-font-set="material-icons md-36 md-light login-icon">&#xE5D2;</md-icon>
+            </md-button>
+            <md-menu-content width="6">
+              <md-menu-item>
+                <md-button class="md-primary" ng-click="goto('devices')" name="devices">{{ 'DEVICES' | translate }}</md-button>
+              </md-menu-item>
+              <md-menu-item>
+                <md-button class="md-primary" ng-click="goto('stations')" name="stations">{{ 'STATIONS' | translate }}</md-button>
+              </md-menu-item>
+              <md-menu-item>
+                <md-button class="md-primary" ng-click="goto('history')" name="history">{{ 'HISTORY' | translate }}</md-button>
+              </md-menu-item>
+              <md-menu-item ng-if="isAuthorized([userRoles.superadmin, userRoles.admin])">
+                <md-button class="md-primary" ng-click="goto('users')" name="users"> {{ 'USERS' | translate }} </md-button>
+              </md-menu-item>
+              <md-menu-item ng-if="isAuthorized([userRoles.superadmin, userRoles.admin])">
+                <md-button class="md-primary" ng-click="goto('groups')" name="groups"> {{ 'GROUPS' | translate }} </md-button>
+              </md-menu-item>
+              <md-menu-item ng-if="isAuthorized([userRoles.superadmin, userRoles.admin])">
+                <md-button class="md-primary" ng-click="openCommandDashboard()" name="commands"> {{ 'COMMANDS' | translate }} </md-button>
+              </md-menu-item>
+              <md-menu-item ng-if="isAuthorized([userRoles.superadmin, userRoles.admin])">
+                <md-button class="md-primary" ng-click="goto('auditLog')" name="auditLog"> {{ 'AUDIT_LOG' | translate }} </md-button>
+              </md-menu-item>
+              <md-menu-item>
+                <md-button class="md-primary" ng-click="logout()"> {{ 'LOGOUT' | translate }} </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </div>
+        <div flex="5" layout layout-align="center center">
+          <img class="logo_small" src="../assets/images/logo_small.png" />
+        </div>
+        <div ng-if="isAuthenticated()" layout flex>
+          <div flex="40" hide-sm hide-xs>
+            <md-nav-bar md-selected-nav-item=" currentNavItem " aria-label="NavBar">
+              <md-nav-item md-nav-click="goto('devices')" name="devices">{{ 'DEVICES' | translate }}</md-nav-item>
+              <md-nav-item md-nav-click="goto('stations')" name="stations" ng-if="isAuthorized([userRoles.superadmin, userRoles.admin])">{{ 'STATIONS' | translate }}</md-nav-item>
+              <md-nav-item md-nav-click="goto('history')" name="history">{{ 'HISTORY' | translate }}</md-nav-item>
+              <md-nav-item md-nav-click="goto('users')" name="users" ng-if="isAuthorized([userRoles.superadmin, userRoles.admin])"> {{ 'USERS' | translate }} </md-nav-item>
+              <md-nav-item md-nav-click="goto('groups')" name="groups" ng-if="isAuthorized([userRoles.superadmin, userRoles.admin])"> {{ 'GROUPS' | translate }} </md-nav-item>
+            </md-nav-bar>
+          </div>
+          <div flex="20" layout layout-align="center center">
+            <status-summary data="summaryData" ng-if="summaryData"></status-summary>
+          </div>
+          <div flex="5" layout layout-align="start center">
+            <!-- <span class="mnt-badge animate-flicker" ng-if="batchStatus">
+              <md-tooltip md-direction="left">{{ batchStatus.createdAt | date:'MM/dd/yyyy HH:mm' }}</md-tooltip>
+              MNT
+            </span> -->
+          </div>
+          <!--<div flex ng-controller="NavbarController">
+                    <md-select ng-model="currentLanguage" placeholder="">
+                        <md-option ng-value="lang" ng-repeat="lang in availableLanguages">{{ lang }}</md-option>
+                    </md-select>
+                </div>-->
+          <div flex layout layout-align="end center" hide-sm hide-xs>
+            <div class="">
+              <md-menu md-position-mode="target-right target">
+                <!-- Trigger element is a md-button with an icon -->
+                <md-button class="btn-logout" ng-click="$mdOpenMenu($event)" aria-label="Open menu">
+                  {{ currentUser.name + " " + currentUser.surname }}
+                  <span ng-if="isAuthorized(userRoles.superadmin)">[superadmin]</span>
+                  <span ng-if="isAuthorized(userRoles.admin)">[admin]</span>
+                  <span ng-if="isAuthorized(userRoles.operator)">[operator]</span>
+                  <span ng-if="isAuthorized(userRoles.maintainer)">[maintainer]</span>
+                </md-button>
+                <md-menu-content width="3 ">
+                  <md-menu-item ng-if="isAuthorized([userRoles.superadmin, userRoles.admin])">
+                    <md-button class="md-primary" ng-click="goto('auditLog')" name="auditLog">
+                      {{ 'AUDIT_LOG' | translate }} </md-button>
+                  </md-menu-item>
+                  <md-menu-item ng-if="isAuthorized([userRoles.superadmin, userRoles.admin, userRoles.operator, userRoles.maintainer])">
+                    <md-button class="md-primary" ng-click="openCommandDashboard()" name="commands">
+                      {{ 'COMMANDS' | translate }} </md-button>
+                  </md-menu-item>
+                  <md-menu-item>
+                    <md-button class="md-primary" ng-click="logout()"> {{ 'LOGOUT' | translate }} </md-button>
+                  </md-menu-item>
+                </md-menu-content>
+              </md-menu>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div flex>
+        <md-progress-linear md-mode="indeterminate" ng-disabled="isLoading == false"></md-progress-linear>
+      </div>
+    </div>
+    <div ng-view flex layout="column" layout-fill style="position: relative">
+    </div>
+  </div>
+
+  <script src="/assets/js/find.polyfill.js"></script>
+  <script src="/assets/js/includes.polyfill.js"></script>
+
+  <script src="/assets/js/lib/angular.min.js"></script>
+  <script src="/assets/js/lib/angular-messages.min.js"></script>
+  <script src="/assets/js/lib/angular-route.min.js"></script>
+  <script src="/assets/js/lib/angular-animate.min.js"></script>
+  <script src="/assets/js/lib/angular-aria.min.js"></script>
+  <script src="/assets/js/lib/angular-cookies.min.js"></script>
+  <script src="/assets/js/lib/angular-material.min.js"></script>
+  <script src="/assets/js/lib/angular-translate.min.js"></script>
+  <script src="/assets/js/lib/angular-translate-loader-static-files.min.js"></script>
+  <script src="/assets/js/lib/md-data-table.min.js"></script>
+  <script src="/assets/js/lib/ngStorage.min.js"></script>
+  <script src="/assets/js/lib/angular-toastr.tpls.min.js"></script>
+  <script src="/assets/js/lib/angular-poller.min.js"></script>
+  <script src="/assets/js/lib/md-time-picker.js"></script>
+
+  <script src="/assets/js/lib/leaflet.js "></script>
+  <script src="/assets/js/lib/leaflet.popup.angular.js "></script>
+  <script src="/assets/js/lib/leaflet.markercluster.js "></script>
+
+  <script src="/assets/js/lib/moment.min.js"></script>
+  <script src="/assets/js/lib/angular-moment.min.js"></script>
+
+  <script src="/dist/models.min.js "></script>
+  <script src="/dist/filters.min.js "></script>
+  <script src="/dist/directives.js "></script>
+  <script src="/dist/services.min.js "></script>
+  <script src="/dist/controllers.js "></script>
+
+  <script src="app.js "></script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<div class="action-over-btn">
+  <md-fab-speed-dial md-open="fabIsOpen" md-direction="left" ng-class="fabSelectedMode">
+    <md-fab-trigger>
+      <md-button class="md-fab md-accent" ng-class="isFilterActive ? 'md-warn' : ''">
+        <md-tooltip md-direction="top" md-visible="tooltipVisible "> {{ 'MENU' | translate }} </md-tooltip>
+        <md-icon md-font-set="material-icons md-24 md-light ">&#xE5D2;</md-icon>
+      </md-button>
+    </md-fab-trigger>
+    <md-fab-actions>
+      <md-button class="md-fab md-raised md-mini " ng-click="editDeviceNavOpen($event)" ng-if="isAuthorized([userRoles.superadmin, userRoles.admin])">
+        <md-tooltip md-direction="top"> {{ 'ADD_NEW_DEVICE' | translate }} </md-tooltip>
+        <md-icon md-font-set="material-icons md-accent">&#xE146;</md-icon>
+      </md-button>
+      <md-button class="md-fab md-raised md-mini" ng-click="filtersNavOpen($event)" ng-class="isFilterActive ? 'md-warn' : ''">
+        <md-tooltip md-direction="top"> {{ 'FILTER' | translate }} </md-tooltip>
+        <md-icon md-font-set="material-icons md-accent" ng-class="isFilterActive ? 'md-light' : 'md-accent'">&#xE152;</md-icon>
+      </md-button>
+      <md-button class="md-fab md-raised md-mini" ng-click="updateDevicesNavOpen($event)" ng-if="isAuthorized([userRoles.superadmin, userRoles.admin]) && currentView == CURRENT_VIEW_LIST">
+        <md-tooltip md-direction="top"> {{ 'MNT_DEVICES' | translate }} </md-tooltip>
+        <span class="update-devices-icon">MNT</span>
+      </md-button>
+      <md-button class="md-fab md-raised md-mini" ng-click="commandsNavOpen($event)" ng-if="isAuthorized([userRoles.superadmin, userRoles.admin, userRoles.operator, userRoles.maintainer]) && currentView == CURRENT_VIEW_LIST">
+        <md-tooltip md-direction="top"> {{ 'SEND_COMMAND' | translate }} </md-tooltip>
+        <img ng-src="{{ imageBasePath + 'terminal.svg' }}" class="command-icon">
+      </md-button>
+      <md-button class="md-fab md-raised md-mini" ng-click="uploadDeviceNavOpen($event)" ng-if="isAuthorized([userRoles.superadmin, userRoles.admin])">
+        <md-tooltip md-direction="top"> {{ 'UPLOAD_DEVICES' | translate }} </md-tooltip>
+        <md-icon md-font-set="material-icons md-accent">&#xE2C6;</md-icon>
+      </md-button>
+    </md-fab-actions>
+  </md-fab-speed-dial>
+</div>

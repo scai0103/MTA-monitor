@@ -1,0 +1,25 @@
+<div id="#dialog" class="leaflet-popup-mycontent">
+  <div layout="column">
+    <div layout layout-align="top center">
+      <h3 class="station-title-popup">
+        <md-icon md-font-set="material-icons md-light">&#xE55B;</md-icon>
+        <a href="javascript:void(0);" ng-click="$content.goto('/stationDetails/' + $content.station.name + '/map/stations/map')">
+          {{ ::$content.station.displayName }}
+        </a>
+      </h3>
+    </div>
+
+    <div layout layout-wrap layout-align="center center">
+      <div flex="50">
+        <md-button class="md-button host-box md-accent md-raised" ng-click="$content.editStationNavOpen($event, $content.station.name)">
+          {{ 'EDIT' | translate }}
+        </md-button>
+      </div>
+      <div flex="50">
+        <md-button class="md-button host-box error-host" ng-click="$content.deleteStation($event, $content.station)">
+          {{ 'DELETE' | translate }}
+        </md-button>
+      </div>
+    </div>
+  </div>
+</div>

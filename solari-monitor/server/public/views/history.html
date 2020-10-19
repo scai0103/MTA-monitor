@@ -1,0 +1,94 @@
+<div class="table-page-box h-100">
+  <div class="row">
+    <div class="col-xs-12">
+      <h1 class="dark-title">{{pageTitle}}</h1>
+    </div>
+
+    <form name="form.filtersForm" class="col-xs-12 row my-2" ng-submit="filterChart()">
+<!--
+      <div class="row col-xs-12">
+        <md-input-container class="md-block  col-xs-6 col-md-3">
+          <label>{{ 'REPORT' | translate }}</label>
+          <md-select ng-model="dashboardId" name="report" aria-label="report">
+            <md-option ng-repeat="dashboard in dashboards | orderBy: 'name' track by $index" ng-value="dashboard.id">
+              {{ dashboard.name }}
+            </md-option>
+          </md-select>
+        </md-input-container>
+      </div>
+-->
+
+      <div class="row col-xs-12">
+        <div class="row col-xs-12 col-md-6">
+          <md-input-container class="md-block col-xs-12 col-md-9" layout-align="center center">
+            <label>{{ 'DATE_FROM' | translate }}</label>
+            <md-datepicker name="datefrom" ng-model="chartFilters.from" md-max-date="chartFilters.to" required="required"></md-datepicker>
+            <div class="md-errors-spacer"></div>
+            <div ng-messages for="filtersForm.datefrom.$error" role="alert">
+              <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+            </div>
+          </md-input-container>
+          <md-time-picker ng-model="chartFilters.from" mandatory="required" no-meridiem no-auto-switch class="md-block" layout></md-time-picker>
+        </div>
+        <div class="row col-xs-12 col-md-6">
+
+          <md-input-container class="md-block  col-xs-12 col-md-9" layout-align="center center">
+            <label>{{ 'DATE_TO' | translate }}</label>
+            <md-datepicker name="dateto" ng-model="chartFilters.to" md-min-date="chartFilters.from" required="required"></md-datepicker>
+            <div class="md-errors-spacer"></div>
+            <div ng-messages for="filtersForm.dateto.$error" role="alert">
+              <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+            </div>
+          </md-input-container>
+
+          <md-time-picker ng-model="chartFilters.to" mandatory="required" no-meridiem no-auto-switch class="md-block" layout></md-time-picker>
+
+        </div>
+
+        <md-input-container class="md-block  col-xs-12 col-md-6">
+          <label>{{ 'DEVICE' | translate }}</label>
+          <md-select ng-model="chartFilters.device" name="deviceName" aria-label="deviceName">
+            <md-option ng-value="-1">{{ 'ALL' | translate }}</md-option>
+            <md-option ng-repeat="device in devices | orderBy: 'displayName' track by $index" ng-value="device.name">
+              {{device.displayName}}
+            </md-option>
+          </md-select>
+          <div class="md-errors-spacer"></div>
+        </md-input-container>
+        <md-input-container class="md-block  col-xs-12 col-md-6">
+          <label>{{ 'STATION' | translate }}</label>
+          <md-select ng-model="chartFilters.station" name="stationName" aria-label="stationName">
+            <md-option ng-value="-1">{{ 'ALL' | translate }}</md-option>
+            <md-option ng-repeat="station in stations | orderBy: 'displayName' track by $index" ng-value="station.name" ng-if="station.name != STATION_UNDEFINED">
+              {{station.displayName}}
+            </md-option>
+          </md-select>
+          <div class="md-errors-spacer"></div>
+        </md-input-container>
+        <md-input-container class="md-block  col-xs-12 col-md-6">
+          <label>{{ 'TEMPLATE' | translate }}</label>
+          <md-select ng-model="chartFilters.template" name="templateName" aria-label="templateName">
+            <md-option ng-value="-1">{{ 'ALL' | translate }}</md-option>
+            <md-option ng-repeat="template in templates | orderBy: 'displayName' track by $index" ng-value="template.name">
+              {{template.displayName}}
+            </md-option>
+          </md-select>
+          <div class="md-errors-spacer"></div>
+        </md-input-container>
+      </div>
+      <div class="col-xs-12 mx-0 px-0 text-align-right">
+        <md-button type="submit" class="md-button md-raised md-accent" ng-disabled="form.filtersForm.$invalid">
+          {{ 'FILTER' | translate }}
+        </md-button>
+        <md-button type="button" class="md-button md-raised md-accent" ng-click="reset()">
+          {{ 'RESET' | translate }}
+        </md-button>
+      </div>
+    </form>
+    <div class="col-xs-12">
+      <div id="kibana-iframe-container" class="iframe-container">
+        <iframe id="kibana-iframe" ng-src="{{trustSrc(kibanaDashUrl)}}"></iframe>
+      </div>
+    </div>
+  </div>
+</div>

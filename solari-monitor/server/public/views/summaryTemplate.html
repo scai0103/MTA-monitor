@@ -1,0 +1,53 @@
+<div class="status-summary">
+  <!-- OK: {{ data.ok }} | ERROR: {{ data.error }} | WARN: {{ data.warning }} | MNT: {{ data.maintenance }} |  -->
+  <div class="stats_box">
+    <md-tooltip md-direction="left">OK</md-tooltip>
+    <span class="ok-circle"></span>
+    <!-- <span class="stats_label">
+      OK:
+    </span> -->
+    <span class="stats_value">
+      {{ data.ok }}
+    </span>
+  </div>
+
+  <!--  -->
+  <div class="stats_box">
+    <md-tooltip md-direction="left">ERROR</md-tooltip>
+    <span class="error-circle"></span>
+    <!-- <span class="stats_label">
+      ERROR:
+    </span> -->
+    <span class="stats_value">
+      {{ data.error }}
+    </span>
+  </div>
+
+  <!--  -->
+  <div class="stats_box">
+    <md-tooltip md-direction="left">WARNING</md-tooltip>
+    <span class="warn-circle"></span>
+    <!-- <span class="stats_label">
+      WARN:
+    </span> -->
+    <span class="stats_value">
+      {{ data.warning }}
+    </span>
+  </div>
+
+  <!--  -->
+  <div class="stats_box">
+    <md-tooltip md-direction="left">MAINTENANCE</md-tooltip>
+    <span class="maintenance-circle"></span>
+    <!-- <span class="stats_label">
+      MNT:
+    </span> -->
+    <span class="stats_value">
+      {{ data.maintenance }}
+    </span>
+  </div>
+  <div class="update_date_box">
+    last update: {{ (data.lastUpdate | date:'MM/dd/yyyy HH:mm') || '-' }}
+  </div>
+
+</div>

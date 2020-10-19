@@ -1,0 +1,23 @@
+<div id="#dialog" ng-class="{'leaflet-popup-mycontent': $content.station.devicesFiltered.length > 1 }">
+  <div layout="column">
+    <div layout layout-align="top center">
+      <h3 class="station-title-popup">
+        <md-icon md-font-set="material-icons md-light">&#xE55B;</md-icon>
+        <a href="javascript:void(0);" ng-click="$content.goto('/stationDetails/' + $content.station.name + '/map/devices/map')"> {{ ::$content.station.displayName }} </a>
+      </h3>
+    </div>
+
+    <div layout layout-wrap layout-align="center center">
+      <div ng-attr-flex="{{ $content.station.devicesFiltered.length == 1 ? '100' : '50' }}" ng-repeat="device in $content.station.devicesFiltered | limitTo:$content.deviceNumberViewLimit track by $index" >
+        <md-button class="md-button host-box" ng-attr-title="{{ ::device.displayName }}" ng-click="$content.goto('/deviceDetails/' + device.name)" ng-class="device.maintenance == false ? (device.error ? 'error-host' : (device.warning ? 'warning-host' : 'ok-host')) : 'maintenance-host'">
+          {{ ::device.displayName }}
+        </md-button>
+      </div>
+      <div flex="50">
+        <md-button ng-if="$content.station.devicesFiltered.length > $content.deviceNumberViewLimit" class="md-button host-box" ng-click="$content.showMore($content.station.name)">
+          {{ 'MORE_DEVICES' | translate }}
+        </md-button>
+      </div>
+    </div>
+  </div>
+</div>

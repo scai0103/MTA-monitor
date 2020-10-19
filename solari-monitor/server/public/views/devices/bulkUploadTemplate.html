@@ -1,0 +1,36 @@
+<div layout="column">
+  <div>
+    <h2 class="dark-text"> {{ 'UPLOAD_DEVICES' | translate }} </h2>
+  </div>
+  <div ng-form name="fileUploadForm">
+    <file-upload idx="0" name="import" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" upload-url="uploadUrl" ng-model="uploadFileName"></file-upload>
+    <div ng-messages for="fileUploadForm.import.$error" role="alert" class="upload-validator-container">
+      <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+      <div ng-message="accept">{{ 'VALIDATION_ACCEPT' | translate:'{ accept: "csv" }' }}</div>
+    </div>
+    <md-progress-linear md-mode="determinate" value="{{ progressValue }}" ng-if="isFileUploading"></md-progress-linear>
+  </div>
+
+  <div class="my-20px" layout-align="space-around">
+    <md-progress-circular md-mode="indeterminate" class="md-accent margin-auto" ng-if="isReportLoading && uploadReport == null"></md-progress-circular>
+  </div>
+
+  <div ng-if="uploadReport">
+    <div>
+      <h3 class="dark-text"> {{ 'UPLOAD_REPORT' | translate }} {{ formatDate(uploadReport.date) }} </h3>
+    </div>
+    <div class="my-20px">
+      <div class="box-log-upload">
+        <div>
+          <code>{{ uploadReport.message }}</code>
+        </div>
+        <div ng-if="uploadReport.logs.length">
+          <code>Log:</code>
+        </div>
+        <div ng-repeat="item in uploadReport.logs">
+          <code>{{item.message}}</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

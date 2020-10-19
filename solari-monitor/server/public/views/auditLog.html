@@ -1,0 +1,74 @@
+<div class="table-page-box h-100">
+  <div class="row">
+
+    <div class="col-xs-12">
+      <h1 class="dark-title">{{ pageTitle | translate }}</h1>
+    </div>
+    <div class="col-xs-12">
+      <div class="md-toolbar-tools col-xs-12 row my-2" name="filterForm" ng-form>
+        <md-input-container class="md-block col-xs-4">
+          <label>{{ 'DATE_FROM' | translate }}</label>
+          <md-datepicker name="dateStart" ng-model="dateStart" md-max-date="dateEnd" required="required"></md-datepicker>
+          <div ng-messages for="filterForm.dateStart.$error" role="alert">
+            <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block col-xs-4">
+          <label>{{ 'DATE_TO' | translate }}</label>
+          <md-datepicker name="dateEnd" ng-model="dateEnd" md-min-date="dateStart" required="required"></md-datepicker>
+          <div ng-messages for="filterForm.dateEnd.$error" role="alert">
+            <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+          </div>
+        </md-input-container>
+        <div class="col-xs-4">
+          <md-button type="button" class="md-raised md-accent mx-0 col-xs-2 col-md-1" ng-click="refreshData()" ng-disabled="filterForm.$invalid">
+            {{ 'FILTER' | translate }}
+          </md-button>
+          <md-button type="button" class="md-raised md-accent mx-0 col-xs-2 col-md-1" ng-click="deleteData($event)" ng-disabled="filterForm.$invalid">
+            {{ 'DELETE' | translate }}
+          </md-button>
+        </div>
+      </div>
+      <div class="md-toolbar-tools">
+        <md-icon class="material-icons">&#xE8B6;</md-icon>
+        <form flex>
+          <md-input-container class="md-block">
+            <label> {{ 'SEARCH' | translate }} </label>
+            <input type="text" name="query.filter" ng-model="query.filter">
+          </md-input-container>
+        </form>
+      </div>
+      <md-table-container>
+        <table md-table md-progress="logs" class="custom-datatable">
+          <thead md-head md-order="query.order" md-on-reorder="refreshData">
+            <tr md-row>
+              <th class="audit-date-th"> {{ 'DATE' | translate }} </th>
+              <th class=""> {{ 'USER' | translate }} </th>
+              <th class=""> {{ 'TYPE' | translate }} </th>
+              <th class=""> {{ 'SUBTYPE' | translate }} </th>
+              <th class="audit-description-th"> {{ 'DESCRIPTION' | translate }} </th>
+              <th class=""> {{ 'OBJECT' | translate }} </th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr class="md-row md-row-empty" ng-show="logs.length === 0">
+              <td class="md-cell" colspan="2">{{ 'NO_LOGS_AVAILABLE' | translate }}</td>
+            </tr>
+            <tr md-row md-select="log.id" md-select-id="id" md-auto-select ng-repeat="log in logs | filter: query.filter | limitTo: query.limit: (query.page - 1) * query.limit">
+              <td md-cell class="audit-td">{{log.createdAt | date:"MM/dd/yyyy 'at' HH:mm"}}</td>
+              <td md-cell class="audit-td">{{log.author}}</td>
+              <td md-cell class="audit-td">{{log.type}}</td>
+              <td md-cell class="audit-td">{{log.subType}}</td>
+              <td md-cell class="audit-td">{{log.description}}</td>
+              <td md-cell class="audit-td">
+                <code class="break-word" ng-if="log.object">{{log.object.trunc(500, false)}}</code>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <md-table-pagination md-limit="query.limit" md-limit-options="[10, 20, 50]" md-page="query.page" md-total="{{ logs.length }}"
+          md-on-paginate="refreshUsers" md-page-select></md-table-pagination>
+      </md-table-container>
+    </div>
+
+  </div>

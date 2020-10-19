@@ -1,0 +1,65 @@
+<div class="col-xs-12 row my-2">
+  <md-input-container class="md-block input-info-device col-xs-12 col-md-12" ng-if="isAuthorized([userRoles.superadmin, userRoles.admin])">
+    <md-checkbox ng-model="device.config.production" aria-label="production" ng-disabled="true">
+      {{ 'PRODUCTION' | translate }}
+    </md-checkbox>
+  </md-input-container>
+  <md-input-container class="md-block input-info-device col-xs-12 col-md-6">
+    <label>{{ 'IP_ADDRESS' | translate }}</label>
+    <input type="text" name="name" ng-value="device.address" ng-disabled="true" />
+  </md-input-container>
+  <md-input-container class="md-block input-info-device col-xs-12 col-md-6">
+    <label>{{ 'MODEL' | translate }}</label>
+    <input type="text" name="model" ng-value="device.config.model" ng-disabled="true" />
+  </md-input-container>
+  <md-input-container class="md-block input-info-device col-xs-12 col-md-6">
+    <label>{{ 'SERIAL_NUMBER' | translate }}</label>
+    <input type="text" name="name" ng-value="device.config.serialNumber" ng-disabled="true" />
+  </md-input-container>
+  <md-input-container class="md-block input-info-device col-xs-12 col-md-6">
+    <label>{{ 'GROUPS' | translate }}</label>
+    <md-select aria-label="groups" ng-model="device.config.maintainerGroupIds" required="required" multiple ng-disabled="true">
+      <md-option ng-value="group.id" ng-repeat="group in groups"> {{group.name}} </md-option>
+    </md-select>
+    <div class="md-errors-spacer"></div>
+  </md-input-container>
+  <md-input-container class="md-block input-info-device col-xs-12 col-md-6">
+    <label>{{ 'NOTE' | translate }}</label>
+    <textarea name="notes" ng-model="device.notes" ng-disabled="true"></textarea>
+  </md-input-container>
+  <md-input-container class="md-block input-info-device col-xs-12 col-md-6">
+    <label>{{ 'TEMPLATE' | translate }}</label>
+    <md-select aria-label="template" ng-model="device.config.templateName" required="required" ng-disabled="true">
+      <md-option ng-value="template.name" ng-repeat="template in templates track by template.name"> {{template.displayName}} </md-option>
+    </md-select>
+    <div class="md-errors-spacer"></div>
+  </md-input-container>
+  <md-input-container class="md-block input-info-device col-xs-12 col-md-6">
+    <label>{{ 'STATION' | translate }}</label>
+    <md-select aria-label="station" ng-model="device.config.stationName" required="required" ng-disabled="true">
+      <md-option ng-value="station.name" ng-repeat="station in stations track by station.name"> {{station.displayName}} </md-option>
+    </md-select>
+    <div class="md-errors-spacer"></div>
+  </md-input-container>
+  <md-input-container class="md-block input-info-device col-xs-12 col-md-6">
+    <label>{{ 'FLOOR' | translate }}</label>
+    <md-select aria-label="station" ng-model="device.config.stationFloorId" required="required" ng-disabled="true">
+      <md-option ng-value="-1">{{ 'FLOOR' | translate }} 0</md-option>
+      <md-option ng-value="floor.name" ng-repeat="floor in stationFloors track by $index"> {{ floor.position.displayName }} </md-option>
+    </md-select>
+    <div class="md-errors-spacer"></div>
+  </md-input-container>
+  <md-input-container class="md-block input-info-device col-xs-12 col-md-6">
+    <label>{{ 'LINE' | translate }}</label>
+    <md-select aria-label="line" ng-model="device.config.lineNames" required="required" ng-disabled="true" multiple>
+      <md-option ng-value="line.name" ng-repeat="line in lines track by line.name"> {{line.displayName}} </md-option>
+    </md-select>
+    <div class="md-errors-spacer"></div>
+  </md-input-container>
+  <md-input-container ng-repeat="fieldConf in customFieldConfs" class="md-block input-info-device col-xs-12 col-md-6">
+    <label> {{ fieldConf.displayName }} </label>
+    <input ng-attr-type="{{ fieldConf.type }}" ng-attr-name="{{ fieldConf.name }}" ng-model="device.config.templateFieldsValue[fieldConf.name]"
+      ng-disabled="true" />
+  </md-input-container>
+
+</div>

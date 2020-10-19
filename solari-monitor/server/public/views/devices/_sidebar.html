@@ -1,0 +1,202 @@
+<section>
+  <md-sidenav ng-class="(currentView == CURRENT_VIEW_MAP)? 'big-sidenav-left':' small-sidenav'" class="md-sidenav-left" md-component-id="filters-nav">
+    <div layout-padding layout-margin>
+      <md-button class="md-icon-button md-button" ng-click="filtersNavClose()">
+        <md-icon md-font-set="material-icons md-24 md-dark">&#xE5CD;</md-icon>
+      </md-button>
+      <device-filter map-id="mapId" quick-links-enabled="currentView == CURRENT_VIEW_MAP" areas="areas" lines="lines" stations="stations"
+        callback-fn="setFilterData(filters, isActive)" authorized="isAuthorized([userRoles.superadmin, userRoles.admin])" ng-if="dataHasLoaded"></device-filter>
+    </div>
+  </md-sidenav>
+</section>
+
+<section>
+  <md-sidenav class="md-sidenav-right" md-component-id="edit-device-nav">
+    <div layout-fill>
+      <div class="row middle-xs between-xs col-xs-12 topTitle-sidenav mx-0">
+        <div class="col-xs-2">
+          <md-button class="md-icon-button" ng-click="editDeviceNavClose()">
+            <md-icon md-font-set="material-icons md-24 md-light">&#xE5CD;</md-icon>
+            <i class="material-icons">&#xE5CD;</i>
+          </md-button>
+        </div>
+        <div class="col-xs-8">
+          <h1 class="md-title title-form">{{ 'ADD_NEW_DEVICE' | translate }}</h1>
+        </div>
+      </div>
+      <div class="row fullHeightLessTopbar col-xs-12 mx-0 px-0">
+        <device-wizard devices="devices" stations="stations" templates="templates" groups="groups" authorized="isAuthorized([userRoles.superadmin, userRoles.admin])"
+          ng-if="dataHasLoaded && editDeviceIsOpen"></device-wizard>
+      </div>
+    </div>
+  </md-sidenav>
+</section>
+
+<section>
+  <md-sidenav class="md-sidenav-left big-sidenav-left" md-component-id="commands-nav">
+    <div layout-padding layout-margin>
+      <md-button class="md-icon-button md-button" ng-click="commandsNavClose()">
+        <md-icon md-font-set="material-icons md-24 md-dark">&#xE5CD;</md-icon>
+      </md-button>
+
+      <div layout ng-if="dataHasLoaded">
+        <form name="deviceCommandForm" ng-submit="commandSend(deviceCommandForm)" flex layout="column" layout-fill>
+          <div layout="column" flex="45">
+            <h2 class="dark-text"> {{ 'COMMANDS' | translate }} </h2>
+            <md-input-container class="md-block">
+              <label>{{ 'COMMANDS' | translate }}</label>
+              <md-select aria-label="command" ng-model="commandSelected.name" required="required" ng-change="onCommandChange($event)" ng-disabled="commandsAvailable.length == 0">
+                <md-option ng-value="command.name" ng-repeat="command in commandsAvailable | filter : {privGroups : currentUser.idRole } : true | orderBy: 'displayName'"> {{command.displayName}} </md-option>
+              </md-select>
+            </md-input-container>
+            <md-input-container class="md-block" ng-if="commandRequireParams(commandSelected.name)">
+              <label> {{ 'COMMAND_PARAMS' | translate }} </label>
+              <textarea name="paramValue" ng-model="commandSelected.parameters"></textarea>
+            </md-input-container>
+            <md-button type="submit" class="md-raised md-accent" aria-label="Send command" ng-disabled="deviceCommandForm.$invalid">
+              {{ 'SEND_COMMAND' | translate }}
+            </md-button>
+          </div>
+        </form>
+
+        <div layout="column" flex="50" flex-offset="5">
+          <h2 class="dark-text"> {{ 'SELECTED_DEVICES' | translate }} </h2>
+          <div ng-if="!isOneDeviceAvailable">
+            {{ 'NO_DEVICE' | translate }}
+          </div>
+          <div class="tag-container" ng-if="isOneDeviceAvailable">
+            <div ng-bind-html="formatDeviceIdList(deviceCheckedIds)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </md-sidenav>
+</section>
+
+
+<section>
+  <md-sidenav class="md-sidenav-left big-sidenav-left" md-component-id="updatedevices-nav">
+    <div layout-padding layout-margin>
+      <md-button class="md-icon-button md-button" ng-click="updateDevicesNavClose()">
+        <md-icon md-font-set="material-icons md-24 md-dark">&#xE5CD;</md-icon>
+      </md-button>
+
+      <div layout>
+        <div flex layout="column" layout-fill>
+
+          <h2 class="dark-text"> {{ 'MNT_DEVICES' | translate }} </h2>
+
+          <form name="updateDevicesForm" ng-submit="updateDevices(updateDevicesForm)" layout-fill ng-if="!batchStatus">
+            <div layout="column" flex>
+              <md-input-container class="md-block">
+                <label>{{ 'COMMANDS' | translate }}</label>
+                <md-select aria-label="command" ng-model="updateDevicesCommandSelected.name" required="required" ng-change="onUpdateDevicesCommandChange($event)"
+                  ng-disabled="updateDevicesCommands.length == 0">
+                  <md-option ng-value="command.name" ng-repeat="command in updateDevicesCommands | orderBy: 'displayName'"> {{command.displayName}} </md-option>
+                </md-select>
+              </md-input-container>
+              <md-input-container class="md-block" ng-if="updateDevicesCommandSelected.name == UPDATE_DEVICES_COMMAND_UPDATE">
+                <md-checkbox ng-model="updateDevicesCommandSelected.parameters" aria-label="production">
+                  {{ 'PRODUCTION' | translate }}
+                </md-checkbox>
+                <div ng-messages for="updateDevicesForm.parameters.$error" role="alert">
+                  <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+                </div>
+              </md-input-container>
+              <div ng-if="updateDevicesCommandSelected.name == UPDATE_DEVICES_COMMAND_ADD_MAINTENANCE">
+                <md-input-container class="md-block">
+                  <label>{{ 'AUTHOR' | translate }}</label>
+                  <input type="text" name="author" ng-model="updateDevicesCommandSelected.parameters.author" required="required" />
+                  <div ng-messages for="updateDevicesForm.author.$error" role="alert">
+                    <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+                  </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                  <label>{{ 'DETAIL' | translate }}</label>
+                  <textarea name="detail" ng-model="updateDevicesCommandSelected.parameters.comment" required="required"></textarea>
+                  <div ng-messages for="updateDevicesForm.detail.$error" role="alert">
+                    <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+                  </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                  <label>{{ 'DATE_FROM' | translate }}</label>
+                  <md-datepicker name="datefrom" ng-model="updateDevicesCommandSelected.parameters.startDate" md-max-date="updateDevicesCommandSelected.parameters.endDate"
+                    required="required"></md-datepicker>
+                  <div class="md-errors-spacer"></div>
+                  <div ng-messages for="updateDevicesForm.datefrom.$error" role="alert">
+                    <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+                  </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                  <label>{{ 'DATE_TO' | translate }}</label>
+                  <md-datepicker name="dateto" ng-model="updateDevicesCommandSelected.parameters.endDate" md-min-date="updateDevicesCommandSelected.parameters.startDate"
+                    required="required"></md-datepicker>
+                  <div class="md-errors-spacer"></div>
+                  <div ng-messages for="updateDevicesForm.dateto.$error" role="alert">
+                    <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+                  </div>
+                </md-input-container>
+              </div>
+              <md-button type="submit" class="md-raised md-accent" aria-label="Send command" ng-disabled="updateDevicesForm.$invalid || !isOneDeviceAvailable">
+                {{ 'SEND_COMMAND' | translate }}
+              </md-button>
+            </div>
+          </form>
+
+          <div ng-if="batchStatus">
+            <div layout="column" class="my-2" flex="100" layout-align="center center">
+              <md-progress-circular md-mode="indeterminate" class="md-accent"></md-progress-circular>
+            </div>
+            <div layout="column" class="my-2" flex="100" layout-align="center center">
+              <div>{{ batchStatus.createdAt | date:'MM/dd/yyyy HH:mm' }}</div>
+              <!-- <div>{{ batchStatus.completed + batchStatus.failed }} / {{ batchStatus.total }}</div> -->
+            </div>
+          </div>
+
+        </div>
+
+        <div layout="column" flex="50" flex-offset="5">
+          <h2 class="dark-text"> {{ 'SELECTED_DEVICES' | translate }} </h2>
+          <div ng-if="!isOneDeviceAvailable">
+            {{ 'NO_DEVICE' | translate }}
+          </div>
+          <div class="tag-container" ng-if="isOneDeviceAvailable">
+            <div ng-bind-html="formatDeviceIdList(deviceCheckedIds)"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </md-sidenav>
+</section>
+
+
+<section>
+  <md-sidenav class="md-sidenav-left small-sidenav" md-component-id="uploaddevice-nav">
+    <div layout-padding layout-margin>
+      <md-button class="md-icon-button md-button" ng-click="uploadDeviceNavClose()">
+        <md-icon md-font-set="material-icons md-24 md-dark">&#xE5CD;</md-icon>
+      </md-button>
+      <device-bulk-upload upload-url="uploadUrl"></device-bulk-upload>
+    </div>
+  </md-sidenav>
+</section>
+
+
+<section>
+  <md-sidenav class="md-sidenav-right" md-component-id="edit-station-nav">
+    <div layout="column" layout-fill>
+      <div layout layout-align="center center">
+        <div flex="10">
+          <md-button class="md-icon-button" ng-click="editStationNavClose()">
+            <md-icon md-font-set="material-icons md-24 md-light">&#xE5CD;</md-icon>
+          </md-button>
+        </div>
+        <div flex="90">
+          <h1 class="md-title title-form">{{ 'ADD_NEW_STATION' | translate }}</h1>
+        </div>
+      </div>
+
+    </div>
+  </md-sidenav>
+</section>

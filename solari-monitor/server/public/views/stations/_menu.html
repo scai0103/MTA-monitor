@@ -1,0 +1,16 @@
+<div class="action-over-btn">
+  <md-fab-speed-dial md-open="fabIsOpen" md-direction="left" ng-class="fabSelectedMode">
+    <md-fab-trigger>
+      <md-button class="md-fab md-accent">
+        <md-tooltip md-direction="top" md-visible="tooltipVisible "> {{ 'MENU' | translate }} </md-tooltip>
+        <md-icon md-font-set="material-icons md-24 md-light ">&#xE5D2;</md-icon>
+      </md-button>
+    </md-fab-trigger>
+    <md-fab-actions>
+      <md-button class="md-fab md-raised md-mini " ng-click="editStationNavOpen($event)" ng-if="isAuthorized([userRoles.superadmin, userRoles.admin])">
+        <md-tooltip md-direction="top"> {{ 'ADD_NEW_STATION' | translate }} </md-tooltip>
+        <md-icon md-font-set="material-icons md-accent">&#xE146;</md-icon>
+      </md-button>
+    </md-fab-actions>
+  </md-fab-speed-dial>
+</div>

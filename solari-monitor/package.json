@@ -1,0 +1,52 @@
+{
+  "name": "solari-monitor-node",
+  "version": "1.0.0",
+  "description": "Solari devices station monitor",
+  "main": "server\\app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/app.js",
+    "start:live-reload": "gulp && nodemon server/app.js",
+    "prestart": "gulp",
+    "start:debug": "gulp && node --debug server/app.js",
+    "start:live-debug": "gulp && nodemon --debug server/app.js"
+  },
+  "author": {
+    "name": "Juicy Srl",
+    "email": "info@juicy.world"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.17.2",
+    "compression": "^1.7.0",
+    "config": "^1.26.1",
+    "connect-flash": "^0.1.1",
+    "csv-parse": "^1.2.0",
+    "express": "^4.15.3",
+    "express-session": "^1.15.3",
+    "express-winston": "^2.4.0",
+    "formidable": "^1.1.1",
+    "http-proxy": "^1.16.2",
+    "lockfile": "^1.0.3",
+    "mysql": "^2.13.0",
+    "node-uuid": "^1.4.8",
+    "nodemailer": "^4.0.1",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "request": "^2.81.0",
+    "sequelize": "^3.30.4",
+    "string-format": "^0.5.0",
+    "uuid": "^3.1.0",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-bytediff": "^1.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-ng-annotate": "^2.0.0",
+    "gulp-sourcemaps": "^2.6.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8"
+  }
+}

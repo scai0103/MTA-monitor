@@ -1,0 +1,21 @@
+<div id="#dialog">
+
+  <div layout="column">
+    <div layout layout-align="top center">
+      <h3 class="station-title-popup">
+        <md-icon md-font-set="material-icons md-light">&#xE55B;</md-icon>
+        <span>{{ ::$content.device.displayName }}</span>
+      </h3>
+    </div>
+    <div layout layout-align="center center">
+      <div>
+        <div flex="100">
+          <md-button class="md-button host-box" ng-attr-title="{{ ::$content.device.displayName }}" ng-click="$content.goto('/deviceDetails/' + $content.device.name)"
+            ng-class="$content.device.maintenance == false ? ($content.device.error ? 'error-host' : ( device.warning ? 'warning-host' : 'ok-host' )) : 'maintenance-host'">
+            {{ ::$content.device.displayName }}
+          </md-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,1 @@
+var directivesDomain = angular.module('SolariMonitor.directives', []);

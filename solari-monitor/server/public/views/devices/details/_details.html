@@ -1,0 +1,22 @@
+<div class="my-2">
+
+  <div layout="column">
+    <div layout="row">
+      <h3 class="dark-title">{{ 'DEVICE_DASHBOARD' | translate }}</h3>
+    </div>
+  </div>
+  <div layout="column" layout-align="center start">
+    <md-button class="md-raised md-accent mantainance-btn px-20px" ng-href="{{ device.custom.maintenanceUrl }}" target="_blank">{{ 'GO_DASHBOARD' | translate }}</md-button>
+  </div>
+  <div layout="column" layout-align="center start" class="my-2">
+    <md-button class="md-raised md-accent mantainance-btn px-20px" ng-if="isLogAvailable" ng-href="{{ '/devices/syslog/' + device.address }}" target="_blank">{{ 'DOWNLOAD_LOG' | translate }}</md-button>
+  </div>
+  <div layout="column" flex="auto" class="my-2">
+    <div flex>
+      <h3 class="dark-title">{{ 'DETAILS' | translate }}</h3>
+    </div>
+  </div>
+  <div layout="column" flex="auto" ng-if="showDetailIframe" id="detail-iframe-container" class="iframe-container">
+    <device-status device="device"></device-status>
+  </div>
+</div>

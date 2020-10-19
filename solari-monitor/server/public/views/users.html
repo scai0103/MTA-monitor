@@ -1,0 +1,152 @@
+<div class="table-page-box h-100">
+  <div class="row">
+    <div class="col-xs-12">
+      <h1 class="dark-title">{{ pageTitle | translate }}</h1>
+    </div>
+    <div class="col-xs-12">
+      <md-table-container>
+        <table md-table md-row-select multiple ng-model="selected" md-progress="users" class="custom-datatable">
+          <thead md-head md-order="query.order" md-on-reorder="refreshUsers">
+            <tr md-row>
+              <th> {{ 'NAME' | translate }} </th>
+              <th> {{ 'SURNAME' | translate }} </th>
+              <th> {{ 'EMAIL' | translate }} </th>
+              <th> {{ 'ROLE' | translate }} </th>
+              <th> {{ 'GROUP' | translate }} </th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr class="md-row md-row-empty" ng-show="users.length === 0">
+              <td class="md-cell" colspan="6">{{ 'NO_USERS_AVAILABLE' | translate }}</td>
+            </tr>
+            <tr md-row md-select="user.id" md-on-select="enableFabToolbar" md-on-deselect="disableFabToolbar" md-select-id="id" md-auto-select
+              ng-repeat="user in users | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit">
+              <td md-cell>{{ user.name }}</td>
+              <td md-cell>{{ user.surname }}</td>
+              <td md-cell>{{ user.email }}</td>
+              <td md-cell>{{ user.roleName }}</td>
+              <td md-cell>{{ user.Group.name }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+      <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{ users.length }}"
+        md-on-paginate="refreshUsers" md-page-select></md-table-pagination>
+    </div>
+  </div>
+  <div class="action-over-btn">
+    <md-fab-speed-dial md-open="isOpen" md-direction="left" ng-class="selectedMode">
+      <md-fab-trigger>
+        <md-button aria-label="menu" class="md-fab md-accent">
+          <md-tooltip md-direction="top" md-visible="tooltipVisible"> {{ 'MENU' | translate }} </md-tooltip>
+          <md-icon md-font-set="material-icons md-light">&#xE5D2;</md-icon>
+        </md-button>
+      </md-fab-trigger>
+
+      <md-fab-actions>
+        <md-button aria-label="Create" ng-click="addUser()" class="md-fab md-raised md-mini">
+          <md-tooltip md-direction="top"> {{ 'ADD' | translate }} </md-tooltip>
+          <md-icon md-font-set="material-icons md-accent" aria-label="Create">&#xE7FE;</md-icon>
+        </md-button>
+        <md-button ng-disabled="selected.length != 1" ng-click="updateUser()" aria-label="Edit" class="md-fab md-raised md-mini">
+          <md-tooltip md-direction="top"> {{ 'EDIT' | translate }} </md-tooltip>
+          <md-icon md-font-set="material-icons md-accent" aria-label="Edit">&#xE150;</md-icon>
+        </md-button>
+        <md-button ng-disabled="selected.length <= 0" ng-click="showConfirm($event)" aria-label="Delete" class="md-fab md-raised md-mini">
+          <md-tooltip md-direction="top"> {{ 'DELETE' | translate }} </md-tooltip>
+          <md-icon md-font-set="material-icons md-accent" aria-label="Delete">&#xE872;</md-icon>
+        </md-button>
+      </md-fab-actions>
+    </md-fab-speed-dial>
+  </div>
+</div>
+<section>
+  <md-sidenav class="md-sidenav-right" md-component-id="edit-user-nav">
+    <div layout-fill>
+      <div class="row middle-xs between-xs col-xs-12 topTitle-sidenav mx-0">
+        <div class="col-xs-2">
+          <md-button class="md-icon-button" ng-click="editUserNavClose()">
+            <md-icon md-font-set="material-icons md-24 md-light">&#xE5CD;</md-icon>
+          </md-button>
+        </div>
+        <div class="col-xs-8">
+          <h1 class="md-title title-form">{{ userModel.id ? 'EDIT_USER' : 'ADD_NEW_USER' | translate }}</h1>
+        </div>
+      </div>
+
+      <div class="row white-back col-xs-12 mx-0 middle-xs" layout-padding>
+        <div class="col-xs-1"></div>
+        <form name="userForm" ng-submit="handleSubmit()" class="col-xs-10 row" layout-padding>
+          <md-input-container class="md-block col-xs-6">
+            <label> {{ 'NAME' | translate }} </label>
+            <input type="text" name="name" ng-model="userModel.name" required="required" />
+            <div ng-messages for="userForm.name.$error" role="alert">
+              <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block col-xs-6">
+            <label> {{ 'SURNAME' | translate }} </label>
+            <input type="text" name="surname" ng-model="userModel.surname" required="required" />
+            <div ng-messages for="userForm.surname.$error" role="alert">
+              <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block col-xs-6">
+            <label> {{ 'EMAIL' | translate }} </label>
+            <input type="email" name="email" ng-model="userModel.email" required="required" />
+            <div ng-messages for="userForm.email.$error" role="alert">
+              <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+              <div ng-message="email">{{ 'VALIDATION_EMAIL' | translate }}</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block col-xs-6">
+            <label> {{ 'PASSWORD' | translate }} </label>
+            <input type="password" name="password" ng-model="userModel.password" ng-required="!isUpdate" ng-minlength="8" ng-maxlength="15"
+            />
+            <div ng-messages for="userForm.password.$error" role="alert">
+              <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+              <div ng-message="minlength">{{ 'VALIDATION_PASSWORD_LENGTH' | translate }}</div>
+              <div ng-message="maxlength">{{ 'VALIDATION_PASSWORD_LENGTH' | translate }}</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block col-xs-6" ng-if="userModel.idRole != userRoles.superadmin">
+            <md-select name="role" ng-model="userModel.idRole" placeholder="{{ 'SELECT_ROLE' | translate }}" required="required">
+              <md-option ng-value="2">Admin</md-option>
+              <md-option ng-value="3">Operator</md-option>
+              <md-option ng-value="4">Maintainer</md-option>
+            </md-select>
+            <div ng-messages for="userForm.role.$error" role="alert">
+              <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block col-xs-6">
+            <label> {{ 'CONFIRM_PASSWORD' | translate }} </label>
+            <input type="password" name="confirmPassword" ng-model="userModel.confirmPassword" compare-to="userModel.password" ng-required="!isUpdate"
+              ng-minlength="8" ng-maxlength="15" />
+            <div ng-messages for="userForm.confirmPassword.$error" role="alert">
+              <div ng-message="compareTo">{{ 'VALIDATION_COMPARE_TO' | translate }}</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block col-xs-6" ng-if="userModel.idRole == userRoles.superadmin">
+            <md-select name="role" ng-model="userModel.idRole" placeholder="{{ 'SELECT_ROLE' | translate }}" ng-disabled="true">
+              <md-option ng-value="1">SuperAdmin</md-option>
+            </md-select>
+            <div ng-messages for="userForm.role.$error" role="alert">
+              <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block col-xs-6">
+            <md-select ng-model="userModel.idGroup" placeholder="{{ 'SELECT_GROUP' | translate }}">
+              <md-option ng-value="group.id" ng-repeat="group in groups">{{ group.name }}</md-option>
+            </md-select>
+          </md-input-container>
+          <div class="col-xs-12 row end-xs">
+            <md-button type="submit" ng-disabled="userForm.$invalid || isFormSubmitting" aria-label="Create User" class="md-raised md-accent  col-xs-3 col-md-2 mx-0">
+              {{ 'SAVE' | translate }}
+            </md-button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </md-sidenav>
+</section>

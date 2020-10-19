@@ -1,0 +1,43 @@
+<div class="row table-page-box" flex="auto" layout="column" layout-align="center center" ng-if="!device.config.stationName">
+  <h2 class="dark-title md-warn my-20px">{{ 'CHOOSE_STATION' | translate }}</h2>
+</div>
+
+<div class="row table-page-box" layout-fill ng-if="device.config.stationName">
+  <div class="col-xs-8">
+    <div class="minimap-container" layout="column" flex="auto" layout-fill ng-if="tabCurrentIndex == TAB_MAP_INDEX">
+      <leaflet map-id="getFloorMapId(device.config.stationFloorId)" center="mapEditCenter" image-overlay-url="getFloorImageOverlayUrl(device.config.stationFloorId)"
+        markers="mapEditMarkers" save-map-state="false" flex></leaflet>
+    </div>
+  </div>
+  <div class="col-xs-4">
+    <md-input-container class="md-block col-xs-12 ">
+      <label> {{ 'LOCATION' | translate }} </label>
+      <input type="text" name="location" required="required" ng-model="device.config.position.displayName" />
+      <div ng-messages for="deviceWizardForm.location.$error" role="alert">
+        <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block col-xs-12 ">
+      <label> {{ 'LAT' | translate }} </label>
+      <input type="text" name="lat" required="required" disabled="disabled" ng-model="device.config.position.lat" />
+      <div ng-messages for="deviceWizardForm.lat.$error" role="alert">
+        <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block col-xs-12">
+      <label> {{ 'LNG' | translate }} </label>
+      <input type="text" name="lng" required="required" disabled="disabled" ng-model="device.config.position.lng" />
+      <div ng-messages for="deviceWizardForm.lng.$error" role="alert">
+        <div ng-message="required">{{ 'VALIDATION_REQUIRED' | translate }}</div>
+      </div>
+    </md-input-container>
+    <div class="col-xs-12 row end-xs">
+      <md-button type="button" class="md-raised md-primary " ng-click="tabGoToPrev()" flex="25">
+        {{ 'PREV' | translate }}
+      </md-button>
+      <md-button type="button" class="md-raised md-accent mx-0" ng-click="tabGoToNext()" flex="25">
+        {{ 'NEXT' | translate }}
+      </md-button>
+    </div>
+  </div>
+</div>
